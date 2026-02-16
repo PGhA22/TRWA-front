@@ -65,7 +65,7 @@ function Signup() {
     const mm = Number(m[2]);
     const yyyy = Number(m[3]);
 
-    if (yyyy < 1900 || yyyy > new Date().getFullYear()) return null;
+    // if (yyyy < 1900 || yyyy > new Date().getFullYear()) return null;
     if (mm < 1 || mm > 12) return null;
 
     const d = new Date(yyyy, mm - 1, dd);
@@ -127,7 +127,7 @@ function Signup() {
       document.querySelector("#svgUser").classList.remove("fill-red-500");
     }
     // phone_checker
-    if (userContact === "") {
+    if (userPhone === "") {
       document.querySelector("#errorPhone").classList.remove("hidden");
       document.querySelector("#svgPhone").classList.add("fill-red-500");
       setLoading(false);
@@ -149,7 +149,7 @@ function Signup() {
     }
     // email-checker
     if (userEmail === "") {
-      document.querySelector("#erroEmail").classList.remove("hidden");
+      document.querySelector("#errorEmail").classList.remove("hidden");
       document.querySelector("#svgEmail").classList.add("fill-red-500");
       setLoading(false);
       return;
@@ -172,10 +172,12 @@ function Signup() {
     const dob = parseGermanDate(birthDate);
     if (!dob) {
       document.querySelector("#errorBirth").classList.remove("hidden");
+      document.querySelector("#svgBirth").classList.add("fill-red-500");
       setLoading(false);
       return;
     } else {
       document.querySelector("#errorBirth").classList.add("hidden");
+      document.querySelector("#svgBirth").classList.remove("fill-red-500");
     }
 
     if (calcAge(dob) < 18) {
@@ -329,7 +331,7 @@ function Signup() {
           inputProps={{
             type: "text",
             placeholder: "E-Mail-Adress",
-            onChange: (e) => setMail(e.target.value),
+            onChange: (e) => setEmail(e.target.value),
           }}
           inputClassName="pl-8"
           icon={
@@ -367,7 +369,7 @@ function Signup() {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              id="svgPass"
+              id="svgBirth"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
