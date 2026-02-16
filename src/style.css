@@ -1,0 +1,885 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-3xl: 120rem; /* 1920px FHD */
+  --breakpoint-4xl: 160rem; /* 2560px 2K */
+  --breakpoint-5xl: 240rem; /* 3840px 4k */
+}
+
+/* Medium = 500 */
+@font-face {
+  font-family: "ITCErasStd";
+  src:
+    url("/src/assets/fonts/ITCErasStd-Medium.woff2") format("woff2"),
+    url("/src/assets/fonts/ITCErasStd-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Demi = 600 */
+@font-face {
+  font-family: "ITCErasStd";
+  src:
+    url("/src/assets/fonts/ITCErasStd-Demi.woff2") format("woff2"),
+    url("/src/assets/fonts/ITCErasStd-Demi.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bold = 700 */
+@font-face {
+  font-family: "ITCErasStd";
+  src:
+    url("/src/assets/fonts/ITCErasStd-Bold.woff2") format("woff2"),
+    url("/src/assets/fonts/ITCErasStd-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@property --btn-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 90deg;
+}
+
+:root {
+  --bg-prim: linear-gradient(
+    180deg,
+    #000000 0%,
+    #010921 14.06%,
+    #010d2c 18.75%,
+    #021958 32.69%,
+    #1b3785 72.12%,
+    #4694d7 100%
+  );
+
+  --btn-angle: 90deg;
+  --btn-color: linear-gradient(var(--btn-angle), #000080 0%, #000000 100%);
+
+  --glass-angle: -45deg;
+  --glass-intensity: 0.8;
+  --glass-dispersion: 0.5;
+  --glass-frost: 4;
+}
+::-webkit-scrollbar {
+  width: 3px;
+  color: #4694d7;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.55) transparent;
+  scroll-behavior: smooth;
+}
+html,
+body {
+  background-image: var(--bg-prim);
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100vw;
+  margin: 0px;
+  overflow-x: hidden;
+
+  color: #fff;
+
+  font-family: "ITCErasStd", serif;
+}
+
+.gradient-border {
+  @apply relative;
+}
+
+.gradient-border::before {
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation-name: myAnimation1;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+  z-index: 1;
+  @apply content-[""] rounded-4xl p-[1.5px] inset-0 absolute;
+}
+
+.gradient-border:hover::before {
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation-name: myAnimation;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+  @apply content-[""] rounded-4xl p-[1.5px] inset-0 absolute;
+}
+
+.in-gradient-border {
+  @apply relative;
+}
+
+.in-gradient-border::before {
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation-name: myAnimation3;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+  z-index: 1;
+  @apply content-[""] rounded-4xl p-[1.5px] inset-0 absolute;
+}
+
+.in-gradient-border:hover::before {
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation-name: myAnimation2;
+  animation-duration: 500ms;
+  animation-fill-mode: forwards;
+  @apply content-[""] rounded-4xl p-[1.5px] inset-0 absolute;
+}
+
+@keyframes myAnimation {
+  0% {
+    background-image: linear-gradient(
+      13deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  8.3% {
+    background-image: linear-gradient(
+      12deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 49%,
+      rgba(255, 255, 255, 0) 51%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  16.6% {
+    background-image: linear-gradient(
+      11deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 48%,
+      rgba(255, 255, 255, 0) 52%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  24.9% {
+    background-image: linear-gradient(
+      10deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 46%,
+      rgba(255, 255, 255, 0) 54%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  33.2% {
+    background-image: linear-gradient(
+      9deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 44%,
+      rgba(255, 255, 255, 0) 56%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  41.5% {
+    background-image: linear-gradient(
+      8deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 42%,
+      rgba(255, 255, 255, 0) 58%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  49.8% {
+    background-image: linear-gradient(
+      7deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  58.1% {
+    background-image: linear-gradient(
+      6deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 38%,
+      rgba(255, 255, 255, 0) 62%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  66.4% {
+    background-image: linear-gradient(
+      5deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 36%,
+      rgba(255, 255, 255, 0) 64%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  74.7% {
+    background-image: linear-gradient(
+      4deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 34%,
+      rgba(255, 255, 255, 0) 66%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  83% {
+    background-image: linear-gradient(
+      3deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 32%,
+      rgba(255, 255, 255, 0) 68%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  91.3% {
+    background-image: linear-gradient(
+      2deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0) 70%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  99.6% {
+    background-image: linear-gradient(
+      1deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 28%,
+      rgba(255, 255, 255, 0) 72%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  100% {
+    background-image: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0) 75%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+}
+
+@keyframes myAnimation1 {
+  0% {
+    background-image: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0) 75%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  8.3% {
+    background-image: linear-gradient(
+      1deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 28%,
+      rgba(255, 255, 255, 0) 72%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  16.6% {
+    background-image: linear-gradient(
+      2deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0) 70%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  24.9% {
+    background-image: linear-gradient(
+      3deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 32%,
+      rgba(255, 255, 255, 0) 68%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  33.2% {
+    background-image: linear-gradient(
+      4deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 34%,
+      rgba(255, 255, 255, 0) 66%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  41.5% {
+    background-image: linear-gradient(
+      5deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 36%,
+      rgba(255, 255, 255, 0) 64%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  49.8% {
+    background-image: linear-gradient(
+      6deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 38%,
+      rgba(255, 255, 255, 0) 62%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  58.1% {
+    background-image: linear-gradient(
+      7deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  66.4% {
+    background-image: linear-gradient(
+      8deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 42%,
+      rgba(255, 255, 255, 0) 58%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  74.7% {
+    background-image: linear-gradient(
+      9deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 44%,
+      rgba(255, 255, 255, 0) 56%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  83% {
+    background-image: linear-gradient(
+      10deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 46%,
+      rgba(255, 255, 255, 0) 54%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  91.3% {
+    background-image: linear-gradient(
+      11deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 48%,
+      rgba(255, 255, 255, 0) 52%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  99.6% {
+    background-image: linear-gradient(
+      12deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 48%,
+      rgba(255, 255, 255, 0) 52%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  100% {
+    background-image: linear-gradient(
+      13deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+}
+@keyframes myAnimation2 {
+  0% {
+    background-image: linear-gradient(
+      6deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  16% {
+    background-image: linear-gradient(
+      5deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0) 55%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  32% {
+    background-image: linear-gradient(
+      4deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 41%,
+      rgba(255, 255, 255, 0) 59%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  48% {
+    background-image: linear-gradient(
+      3deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 37%,
+      rgba(255, 255, 255, 0) 63%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  64% {
+    background-image: linear-gradient(
+      2deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 33%,
+      rgba(255, 255, 255, 0) 67%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  80% {
+    background-image: linear-gradient(
+      1deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 29%,
+      rgba(255, 255, 255, 0) 71%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  100% {
+    background-image: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0) 75%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+}
+
+@keyframes myAnimation3 {
+  0% {
+    background-image: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 25%,
+      rgba(255, 255, 255, 0) 75%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  16% {
+    background-image: linear-gradient(
+      1deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 29%,
+      rgba(255, 255, 255, 0) 71%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  32% {
+    background-image: linear-gradient(
+      2deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 33%,
+      rgba(255, 255, 255, 0) 67%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  48% {
+    background-image: linear-gradient(
+      3deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 37%,
+      rgba(255, 255, 255, 0) 63%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  64% {
+    background-image: linear-gradient(
+      4deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 41%,
+      rgba(255, 255, 255, 0) 59%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  80% {
+    background-image: linear-gradient(
+      5deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0) 55%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  100% {
+    background-image: linear-gradient(
+      6deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+}
+.gradient-border-ch {
+  @apply relative;
+}
+
+.gradient-border-ch::before {
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation-name: myAnimation;
+  animation-duration: 1s;
+  background-image: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 25%,
+    rgba(255, 255, 255, 0) 75%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  @apply content-[""] rounded-4xl p-[1.5px] inset-0 absolute;
+}
+
+.in-gradient-border-ch {
+  @apply relative;
+}
+
+.in-gradient-border-ch::before {
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation-name: myAnimation2;
+  animation-duration: 1s;
+  background-image: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0) 25%,
+    rgba(255, 255, 255, 0) 75%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  @apply content-[""] rounded-4xl p-[1.5px] inset-0 absolute;
+}
+
+/* خود input */
+.glass-input {
+  /* شفاف، بدون fill */
+  background: transparent;
+
+  /* لبه شیشه‌ای */
+  /* border: 1px solid rgba(255, 255, 255, 0.28); */
+
+  box-shadow:
+    inset -1px -1px 5px rgba(255, 255, 255, 0.25),
+    inset 1px 1px 5px rgba(0, 0, 0, 0.9),
+    inset 0 0 9px rgba(255, 255, 255, 0.12);
+}
+.glass-input:focus {
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow:
+    inset -2px -2px 8px rgba(255, 255, 255, 0.3),
+    inset 2px 2px 8px rgba(0, 0, 0, 0.55),
+    inset 0 0 14px rgba(255, 255, 255, 0.18);
+}
+.glass-border-ch,
+.in-glass-border-ch {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.glass-border-ch::before,
+.in-glass-border-ch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 1;
+}
+.glass-border-ch::before {
+  animation: myAnimation 1s forwards;
+}
+
+.in-glass-border-ch::before {
+  animation: myAnimation2 1s forwards;
+}
+
+/* اگر می‌خواهی در حالت هاور انیمیشن تغییر کند */
+.glass-border-ch:hover::before {
+  animation: myAnimation1 500ms forwards;
+}
+
+.Button {
+  overflow: hidden;
+  position: relative;
+  --btn-angle: 90deg;
+  background: linear-gradient(var(--btn-angle), #000080 0%, #000000 100%);
+
+  transition: --btn-angle 0.6s ease-in-out;
+}
+
+.Button:hover {
+  --btn-angle: 270deg;
+}
+.Button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  transition: background-color 0.12s ease;
+  pointer-events: none;
+}
+.Button:active::after {
+  background-color: #ffffff15;
+}
+
+/*  */
+.box-45 {
+  position: relative;
+  border-radius: 30px;
+}
+.box-45::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: 30px;
+
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0) 45%,
+    rgba(255, 255, 255, 0) 55%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+.box-5 {
+  position: relative;
+  border-radius: 30px;
+}
+.box-5::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: 30px;
+
+  background: linear-gradient(
+    5.5deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(255, 255, 255, 0.04) 60%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* dashboard */
+.dashboardBtnActive {
+  position: relative;
+  border-radius: 15px;
+}
+.dashboardBtnActive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: 15px;
+
+  background: linear-gradient(
+    5deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(255, 255, 255, 0.04) 60%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 1;
+}
+.dashboardBtnActive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  background:
+    linear-gradient(
+      2.7deg,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0) 30%,
+      rgba(0, 0, 0, 0) 70%,
+      rgba(255, 255, 255, 0.3) 100%
+    ),
+    linear-gradient(
+      80deg,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.04) 10%,
+      rgba(0, 0, 0, 0.04) 90%,
+      rgba(255, 255, 255, 0.15) 100%
+    );
+}
+
+/* inside b shadow  */
+.image-inner-shadow {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.image-inner-shadow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.85) 25%,
+    rgba(0, 0, 0, 0.65) 45%,
+    rgba(0, 0, 0, 0.4) 65%,
+    rgba(0, 0, 0, 0.2) 78%,
+    rgba(0, 0, 0, 0) 90%
+  );
+
+  pointer-events: none;
+  z-index: 3;
+}
+
+.image-inner-shadow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+
+  box-shadow:
+    inset 0 -140px 220px rgba(0, 0, 0, 0.9),
+    inset 0 -70px 120px rgba(0, 0, 0, 0.7);
+
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* landingPageBG */
+.landingBG {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    #000000 0%,
+    #010921 14.06%,
+    #010d2c 18.75%,
+    #021958 32.69%,
+    #1b3785 52.88%,
+    #4694d7 100%
+  );
+}
+
+/* landingGlow */
+.glow {
+  position: absolute;
+  opacity: 1;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 14.89%,
+      #9dafdf 24.64%,
+      #3b5ebf 62.74%,
+      #245798 62.75%
+    ),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+
+  border-radius: 100%;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.glow1 {
+  width: 100vw;
+  height: 50vw;
+  top: -20vw;
+  left: -32vw;
+  transform: rotate(-45deg);
+}
+.glow2 {
+  width: 864px;
+  height: 685px;
+  top: 1778px;
+  left: 959px;
+  transform: rotate(-67.73deg);
+}
+.glow3 {
+  width: 428px;
+  height: 982px;
+  top: 4244px;
+  left: -295px;
+  transform: rotate(53.7deg);
+}
+
+/* landingFooter */
+.landingFooter {
+  width: 100%;
+  min-height: 576px;
+  background: linear-gradient(
+    180deg,
+    #2a5aa133 0%,
+    #20438aa5 6.25%,
+    #193379cc 12.5%,
+    #162d6b 25%,
+    #112252 50%,
+    #0b1738 75%,
+    #060d1f 100%
+  );
+  position: relative;
+}
+
+.no-date-icon::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+
+/* * {
+  background-color: #b2222232;
+} */
