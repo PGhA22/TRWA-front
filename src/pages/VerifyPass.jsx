@@ -4,7 +4,7 @@ import { http } from "../server/http";
 import "../style.css";
 import Button from "../components/ui/Button";
 
-function VerifyPass() {
+function Verify() {
   const navigate = useNavigate();
   const location = useLocation();
   const identifier = location.state?.identifier;
@@ -134,7 +134,7 @@ function VerifyPass() {
 
     try {
       // TODO-url-Verify
-      const respon = await http.post("/users/users", {
+      const respon = await http.post("/api/accounts/2fa/toggle", {
         identifier,
         code,
       });
@@ -171,8 +171,7 @@ function VerifyPass() {
       setLoading(true);
 
       // TODO-url-Verify2
-      await http.post("/users/users", { identifier });
-      const respon = await http.post("/users/users", { identifier });
+      await http.post("/api/accounts/2fa/toggle/", { identifier });
 
       showError("Code wurde erneut gesendet.");
     } catch (error) {
@@ -271,4 +270,4 @@ function VerifyPass() {
   );
 }
 
-export default VerifyPass;
+export default Verify;

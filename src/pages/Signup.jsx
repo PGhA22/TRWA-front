@@ -16,7 +16,6 @@ function Signup() {
   const [gName, setGName] = useState("");
   const [fName, setFName] = useState("");
   // FIXME-DEL
-  const [contact, setContact] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDate, setBirthDate] = useState("");
@@ -79,16 +78,16 @@ function Signup() {
     return d;
   }
 
-function germanToISO(str) {
-  const dob = parseGermanDate(str);
-  if (!dob) return null;
+  function germanToISO(str) {
+    const dob = parseGermanDate(str);
+    if (!dob) return null;
 
-  const yyyy = dob.getFullYear();
-  const mm = String(dob.getMonth() + 1).padStart(2, "0");
-  const dd = String(dob.getDate()).padStart(2, "0");
+    const yyyy = dob.getFullYear();
+    const mm = String(dob.getMonth() + 1).padStart(2, "0");
+    const dd = String(dob.getDate()).padStart(2, "0");
 
-  return `${yyyy}-${mm}-${dd}`;
-}
+    return `${yyyy}-${mm}-${dd}`;
+  }
 
   async function checkInput() {
     if (loading) return;
@@ -96,8 +95,6 @@ function germanToISO(str) {
 
     const userGName = gName.trim();
     const userFName = fName.trim();
-    // FIXME
-    const userContact = contact.trim();
     const userPhone = phone.trim();
     const userEmail = email.trim();
 
@@ -134,9 +131,7 @@ function germanToISO(str) {
       document.querySelector("#svgPhone").classList.remove("fill-red-500");
     }
     let phonePattern = /^[0-9]{7,15}$/;
-    let contactType = "";
     if (phonePattern.test(phone)) {
-      contactType = "Mobilnummer";
       userData.phone_number = userPhone;
     } else {
       document.querySelector("#errorPhone").classList.remove("hidden");
@@ -146,7 +141,6 @@ function germanToISO(str) {
     }
     // email-checker
     if (userEmail === "") {
-      
       document.querySelector("#errorEmail").classList.remove("hidden");
       document.querySelector("#svgEmail").classList.add("fill-red-500");
       setLoading(false);
@@ -156,9 +150,7 @@ function germanToISO(str) {
       document.querySelector("#svgEmail").classList.remove("fill-red-500");
     }
     let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    contactType = "";
     if (emailPattern.test(email)) {
-      contactType = "E-Mail-Adresse";
       userData.email = userEmail;
     } else {
       document.querySelector("#errorEmail").classList.remove("hidden");
@@ -167,29 +159,29 @@ function germanToISO(str) {
       return;
     }
     // BirthChecher
-const dob = parseGermanDate(birthDate);
-if (!dob) {
-  document.querySelector("#errorBirth").classList.remove("hidden");
-  document.querySelector("#svgBirth").classList.add("text-red-500"); // نه fill
-  setLoading(false);
-  return;
-} else {
-  document.querySelector("#errorBirth").classList.add("hidden");
-  document.querySelector("#svgBirth").classList.remove("text-red-500");
-}
+    const dob = parseGermanDate(birthDate);
+    if (!dob) {
+      document.querySelector("#errorBirth").classList.remove("hidden");
+      document.querySelector("#svgBirth").classList.add("text-red-500");
+      setLoading(false);
+      return;
+    } else {
+      document.querySelector("#errorBirth").classList.add("hidden");
+      document.querySelector("#svgBirth").classList.remove("text-red-500");
+    }
 
-// fea
-const today = new Date();
-const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-const d = new Date(dob.getFullYear(), dob.getMonth(), dob.getDate());
+    // fea
+    const today = new Date();
+    const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const d = new Date(dob.getFullYear(), dob.getMonth(), dob.getDate());
 
-if (d > t) {
-  showError("Geburtsdatum darf nicht in der Zukunft liegen.");
-  document.querySelector("#errorBirth").classList.remove("hidden");
-  document.querySelector("#svgBirth").classList.add("text-red-500");
-  setLoading(false);
-  return;
-}
+    if (d > t) {
+      showError("Geburtsdatum darf nicht in der Zukunft liegen.");
+      document.querySelector("#errorBirth").classList.remove("hidden");
+      document.querySelector("#svgBirth").classList.add("text-red-500");
+      setLoading(false);
+      return;
+    }
 
     // passCheck
     if (userPassword === "") {
@@ -214,20 +206,24 @@ if (d > t) {
     // server
     try {
       // TODO-url-singUp
-      console.log("BASE:", http.defaults.baseURL);
       const respon = await http.post("/api/accounts/register/", userData);
       console.log(respon);
-      console.log("POST", http.defaults.baseURL + "/api/accounts/register/");
 
-      if (twoFactor)
-        navigate("/Verify", {
-          state: {
-            //FIXME
-            identifier: userContact,
-            contactType: contactType,
-          },
-        });
-      else navigate("/Dashboard");
+      const otpId = respon?.data?.otp_id;
+
+      if (!otpId) {
+        navigate("/Dashboard");
+        return;
+      }
+
+      navigate("/Verify", {
+        state: {
+          mode: "email_verify",
+          otp_id: otpId,
+          email: userEmail,
+          twoFactor: twoFactor,
+        },
+      });
     } catch (error) {
       const status = error?.response?.status;
       const errorData = error?.response?.data;
@@ -255,7 +251,7 @@ if (d > t) {
   }
   return (
     <>
-      <div className="text-base h-screen flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center">
+      <div className="my-20 text-base min-h-screen flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center">
         <h3 className="text-[47px] font-extrabold w-10/12">
           Erstellen Sie Ihr Konto
         </h3>

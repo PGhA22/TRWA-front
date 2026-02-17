@@ -40,10 +40,8 @@ function Signin() {
     const userPassword = password.trim();
 
     let userData = {
-      email: null,
-      phoneNumber: null,
+      identifier: userContact,
       password: userPassword,
-      // remember: keepSignedIn,
     };
     // email-phone_checker
     if (userContact === "") {
@@ -57,11 +55,7 @@ function Signin() {
     }
     let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     let phonePattern = /^[0-9]{7,15}$/;
-    if (emailPattern.test(userContact)) {
-      userData.email = userContact;
-    } else if (phonePattern.test(userContact)) {
-      userData.phoneNumber = userContact;
-    } else {
+    if (!emailPattern.test(userContact) && !phonePattern.test(userContact)) {
       document.querySelector("#errorContact").classList.remove("hidden");
       document.querySelector("#svgContact").classList.add("fill-red-500");
       setLoading(false);
@@ -77,9 +71,8 @@ function Signin() {
       document.querySelector("#errorPass").classList.add("hidden");
       document.querySelector("#svgPass").classList.remove("fill-red-500");
     }
-    // TODO-Server-url-login
     try {
-      const respon = await http.post("/login/", userData);
+      const respon = await http.post("/api/accounts/login/", userData);
 
       navigate("/Dashboard");
     } catch (error) {
