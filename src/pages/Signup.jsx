@@ -90,7 +90,6 @@ function germanToISO(str) {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-
   async function checkInput() {
     if (loading) return;
     setLoading(true);
@@ -146,7 +145,6 @@ function germanToISO(str) {
       return;
     }
     // email-checker
-    console.log("email",userEmail);
     if (userEmail === "") {
       
       document.querySelector("#errorEmail").classList.remove("hidden");
@@ -175,9 +173,12 @@ if (!dob) {
   document.querySelector("#svgBirth").classList.add("text-red-500"); // نه fill
   setLoading(false);
   return;
+} else {
+  document.querySelector("#errorBirth").classList.add("hidden");
+  document.querySelector("#svgBirth").classList.remove("text-red-500");
 }
 
-// تاریخ آینده ممنوع
+// fea
 const today = new Date();
 const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 const d = new Date(dob.getFullYear(), dob.getMonth(), dob.getDate());
