@@ -79,19 +79,17 @@ function Signup() {
     return d;
   }
 
-  function calcAge(dob) {
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-    const m = today.getMonth() - dob.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
-    return age;
-  }
+function germanToISO(str) {
+  const dob = parseGermanDate(str);
+  if (!dob) return null;
 
-  function germanToISO(str) {
-    const m = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(str);
-    if (!m) return null;
-    return `${m[3]}-${m[2]}-${m[1]}`; // YYYY-MM-DD
-  }
+  const yyyy = dob.getFullYear();
+  const mm = String(dob.getMonth() + 1).padStart(2, "0");
+  const dd = String(dob.getDate()).padStart(2, "0");
+
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 
   async function checkInput() {
     if (loading) return;
@@ -148,7 +146,9 @@ function Signup() {
       return;
     }
     // email-checker
+    console.log("email",userEmail);
     if (userEmail === "") {
+      
       document.querySelector("#errorEmail").classList.remove("hidden");
       document.querySelector("#svgEmail").classList.add("fill-red-500");
       setLoading(false);
@@ -169,22 +169,27 @@ function Signup() {
       return;
     }
     // BirthChecher
-    const dob = parseGermanDate(birthDate);
-    if (!dob) {
-      document.querySelector("#errorBirth").classList.remove("hidden");
-      document.querySelector("#svgBirth").classList.add("fill-red-500");
-      setLoading(false);
-      return;
-    } else {
-      document.querySelector("#errorBirth").classList.add("hidden");
-      document.querySelector("#svgBirth").classList.remove("fill-red-500");
-    }
+const dob = parseGermanDate(birthDate);
+if (!dob) {
+  document.querySelector("#errorBirth").classList.remove("hidden");
+  document.querySelector("#svgBirth").classList.add("text-red-500"); // نه fill
+  setLoading(false);
+  return;
+}
 
-    if (calcAge(dob) < 18) {
-      showError("Sie müssen mindestens 18 Jahre alt sein.");
-      setLoading(false);
-      return;
-    }
+// تاریخ آینده ممنوع
+const today = new Date();
+const t = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+const d = new Date(dob.getFullYear(), dob.getMonth(), dob.getDate());
+
+if (d > t) {
+  showError("Geburtsdatum darf nicht in der Zukunft liegen.");
+  document.querySelector("#errorBirth").classList.remove("hidden");
+  document.querySelector("#svgBirth").classList.add("text-red-500");
+  setLoading(false);
+  return;
+}
+
     // passCheck
     if (userPassword === "") {
       document.querySelector("#errorPass").classList.remove("hidden");
