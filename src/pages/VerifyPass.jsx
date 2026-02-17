@@ -7,8 +7,16 @@ import Button from "../components/ui/Button";
 function Verify() {
   const navigate = useNavigate();
   const location = useLocation();
-  const identifier = location.state?.identifier;
-  const contactType = location.state?.contactType || "device";
+  const mode = location.state?.mode || "email_verify";
+  // email_verify
+  const otp_id = location.state?.otp_id;
+  const email = location.state?.email;
+  // two_factor
+  const challenge_id = location.state?.challenge_id;
+
+  const contactType =
+    location.state?.contactType ||
+    (mode === "email_verify" ? "E-Mail-Adresse" : "device");
 
   // useEffect(() => {
   //   document.title = "validieren"; TODO-title
@@ -114,6 +122,13 @@ function Verify() {
 
     focusIndex(Math.min(text.length, 6) - 1);
   }
+
+  function validateContext() {
+    if (mode === "email_verify" && !otp_id) return false;
+    if (mode === "two_factor" && !challenge_id) return false;
+    return true;
+  }
+
   async function checkInput() {
     if (loading) return;
     setLoading(true);
@@ -123,26 +138,39 @@ function Verify() {
       return;
     }
 
-    if (!identifier) {
-      showError("Informationen fehlen. Bitte registrieren Sie sich erneut");
-      setTimeout(() => {
-        navigate("/SignUp");
-      }, 3000);
+    if (!validateContext()) {
+      showError("Informationen fehlen. Bitte erneut versuchen");
+      setTimeout(() => navigate("/SignUp"), 1500);
       setLoading(false);
       return;
     }
 
     try {
-      // TODO-url-Verify
-      const respon = await http.post("/api/accounts/2fa/toggle", {
-        identifier,
-        code,
-      });
+      if (mode === "email_verify") {
+        const respon = await http.post("/api/accounts/verify/", {
+          otp_id,
+          code,
+        });
 
-      navigate("/Dashboard");
+        if (respon?.data?.access || respon?.data?.token) {
+          navigate("/Dashboard");
+        } else {
+          // FIXME: go to SignIn should not happen go dashboard should happen, but backend is weird
+          navigate("/SignIn", { state: { justVerified: true, email } });
+        }
+        return;
+      }
+
+      if (mode === "two_factor") {
+        // TODO-url-2FA-Verify
+        await http.post("/api/accounts/2fa/verify/", {
+          challenge_id,
+          code,
+        });
+        navigate("/Dashboard");
+        return;
+      }
     } catch (error) {
-      console.log(error);
-
       const status = error?.response?.status;
       const data = error?.response?.data;
 
@@ -159,7 +187,7 @@ function Verify() {
   async function resendFunc() {
     if (loading) return;
 
-    if (!identifier) {
+    if (!validateContext()) {
       showError("Informationen fehlen. Bitte registrieren Sie sich erneut");
       setTimeout(() => {
         navigate("/SignUp");
@@ -170,13 +198,19 @@ function Verify() {
     try {
       setLoading(true);
 
-      // TODO-url-Verify2
-      await http.post("/api/accounts/2fa/toggle/", { identifier });
+      if (mode === "email_verify") {
+        await http.post("/api/accounts/resend/", { otp_id });
+        showError("Code wurde erneut gesendet.");
+        return;
+      }
 
-      showError("Code wurde erneut gesendet.");
+      if (mode === "two_factor") {
+        // TODO-url-2FA-Resend
+        await http.post("/api/accounts/2fa/resend/", { challenge_id });
+        showError("Code wurde erneut gesendet.");
+        return;
+      }
     } catch (error) {
-      console.log(error);
-
       const status = error?.response?.status;
       const data = error?.response?.data;
 
@@ -194,7 +228,7 @@ function Verify() {
     <>
       <div className="text-base h-screen flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center">
         <h3 className="text-[47px] font-extrabold w-10/12">
-          2FA-Code eingeben
+          {mode === "email_verify" ? "E-Mail bestätigen" : "2FA-Code eingeben"}
         </h3>
         <p className="text-2xl w-11/12">
           Bitte geben Sie den 6-stelligen Code ein, der an Ihre {contactType}{" "}

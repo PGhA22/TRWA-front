@@ -212,7 +212,8 @@ function Signup() {
       const otpId = respon?.data?.otp_id;
 
       if (!otpId) {
-        navigate("/Dashboard");
+        showError("Registrierung fehlgeschlagen. Bitte erneut versuchen.");
+        setLoading(false);
         return;
       }
 
@@ -221,6 +222,8 @@ function Signup() {
           mode: "email_verify",
           otp_id: otpId,
           email: userEmail,
+          phone: userPhone,
+          contactType: "E-Mail-Adresse",
           twoFactor: twoFactor,
         },
       });
