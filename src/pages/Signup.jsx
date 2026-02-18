@@ -254,7 +254,7 @@ function Signup() {
   }
   return (
     <>
-      <div className="my-20 text-base min-h-screen flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center">
+      <div className="my-20 text-base h-screen flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center overflow-hidden">
         <h3 className="text-[47px] font-extrabold w-10/12">
           Erstellen Sie Ihr Konto
         </h3>
@@ -459,13 +459,13 @@ function Signup() {
           errorId="errorConfimPass"
           errorText="Passwörter nicht identisch!"
         />
-        <div className="flex flex-row items-center text-center gap-1.5">
+        {/* <div className="flex flex-row items-center text-center gap-1.5">
           <Checkbox
             id="stepVerfyId"
             onChange={(e) => setTwoFactor(e.target.checked)}
           />
           <label htmlFor="stepVerfyId">Sichere Anmeldung (2FA)</label>
-        </div>
+        </div> */}
         <div className="w-10/12">
           <Button
             type="submit"

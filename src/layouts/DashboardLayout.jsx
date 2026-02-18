@@ -198,13 +198,12 @@ export default function DashboardLayout() {
         >
           {items.map((item, index) => {
             const isRouteActive =
-              item.type === "link" &&
               item.to &&
               pathname.toLowerCase().startsWith(item.to.toLowerCase());
-
             const isPanelActive =
-              item.type === "panel" && activeIndex === index;
-            const isActive = isPanelActive || isRouteActive;
+              item.type === "panel" && (activeIndex === index || isRouteActive);
+            const isActive =
+              (item.type === "link" && isRouteActive) || isPanelActive;
 
             return (
               <div key={index} className="flex flex-col">
