@@ -879,59 +879,127 @@ body {
   -webkit-appearance: none;
 }
 
-
 /* carousel */
-.embla {
-  max-width: 480rem;
-  margin: auto;
-  --slide-height: 19rem;
-  --slide-spacing: 0rem;
-  --slide-size: 55%;
-  width: 800px;
-}
-.embla__viewport {
-  overflow: hidden;
+.heroStackWrap{
+  position: relative;
+  padding: 24px 0 40px;
   width: 100%;
-  background-color: #000000;
 }
-.embla__container {
-  display: flex;
-  touch-action: pan-y pinch-zoom;
-  margin-left: calc(var(--slide-spacing) * -1);
+
+.heroGlow{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -55%);
+  width: 720px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(64,183,255,.35), rgba(0,0,0,0) 60%);
+  filter: blur(100px);
+  opacity: .95;
+  pointer-events:none;
 }
-.embla__slide {
-  background-color: #550055;
-  flex: 0 0 var(--slide-size);
-  min-width: 0;
+
+.heroSwiper{
+  width: 100%;
+  padding: 10px 0 24px;
 }
-.embla__slide__number {
-  /* background-color: #00ff00; */
-  border: 1px solid;
-  border-image-source: linear-gradient(
-    92.19deg,
-    #CFDFFF 1.6%,
-    #003DAB 30.5%,
-    #40B7FF 35.74%,
-    #FFFFFF 69.36%,
-    #40B7FF 81.84%,
-    #CFDFFF 97.29%
-  );
-  border-image-slice: 1;
+
+.heroSlide{
+  width: 450px !important; /* مهم: برای overlap */
+}
+
+.glassCard{
+  position: relative;
+  padding: 22px 22px 18px;
+  color: #fff;
+
   border-radius: 30px;
-  font-size: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--slide-height);
-  user-select: none;
+  border: 1px solid transparent;
+  background: 
+    linear-gradient(#0b102a, #0b102a) padding-box,
+    linear-gradient(
+      92.19deg,
+      #cfdfff 1.6%,
+      #003dab 30.5%,
+      #40b7ff 35.74%,
+      #ffffff 69.36%,
+      #40b7ff 81.84%,
+      #cfdfff 97.29%
+    ) border-box;
+
+  backdrop-filter: blur(100px);
+  -webkit-backdrop-filter: blur(100px);
+
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.06);
+  overflow: hidden;
 }
 
-.embla__slide__number {
-  backface-visibility: hidden;
+/* بردر گرادیانت شیشه‌ای */
+.glassCard::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius: 22px;
+  padding: 1px;
+  background: linear-gradient(90deg,
+    rgba(207,223,255,.55),
+    rgba(0,61,171,.55),
+    rgba(64,183,255,.55),
+    rgba(255,255,255,.15),
+    rgba(64,183,255,.55)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events:none;
+  opacity:.9;
 }
 
+.glassCard h3{
+  margin: 0 0 8px;
+  font-size: 24px;
+  font-weight: 700;
+}
 
-/* * {
-  background-color: #b2222232;
+.glassCard p{
+  font-weight: 600;
+  margin: 0 0 14px;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.glassBtn{
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-weight: 600;
+  opacity: .9;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* واکنش‌گرا */
+@media (max-width: 520px){
+  .heroSlide{ width: 300px; }
+  .heroGlow{ width: 520px; height: 260px; }
+}
+
+.heroSwiper .swiper-slide {
+  transition: transform 0.6s ease;
+}
+
+/* اسلاید فعال */
+.heroSwiper .swiper-slide-active {
+  transform: rotateZ(0deg) !important;
+}
+
+/* .heroSwiper .swiper-slide-prev {
+  transform: rotateZ(-6deg) rotateY(20deg) !important;
+}
+
+.heroSwiper .swiper-slide-next {
+  transform: rotateZ(6deg) !important;
 } */
-
