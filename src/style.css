@@ -707,6 +707,34 @@ body {
 }
 
 /* dashboard */
+.box-dashboard {
+  position: relative;
+  border-radius: 30px;
+}
+.box-dashboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: 30px;
+
+  background: linear-gradient(
+    10deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 200, .5) 45%,
+    rgba(255, 255, 255, 0) 55%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 1;
+}
+
 .dashboardBtnActive {
   position: relative;
   border-radius: 15px;
@@ -905,10 +933,12 @@ body {
 }
 
 .heroSlide{
-  width: 450px !important; /* مهم: برای overlap */
+  width: 400px !important; /* مهم: برای overlap */
 }
 
 .glassCard{
+  height: 232px;
+  width: 378px;
   position: relative;
   padding: 22px 22px 18px;
   color: #fff;
@@ -916,7 +946,7 @@ body {
   border-radius: 30px;
   border: 1px solid transparent;
   background: 
-    linear-gradient(#0b102a, #0b102a) padding-box,
+    linear-gradient(#061325, #0d223f) padding-box,
     linear-gradient(
       92.19deg,
       #cfdfff 1.6%,
@@ -937,7 +967,6 @@ body {
   overflow: hidden;
 }
 
-/* بردر گرادیانت شیشه‌ای */
 .glassCard::before{
   content:"";
   position:absolute;
