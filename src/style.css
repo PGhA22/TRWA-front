@@ -46,7 +46,7 @@
 }
 
 :root {
-  --bg-prim: linear-gradient(
+  --bg: linear-gradient(
     180deg,
     #000000 0%,
     #010921 14.06%,
@@ -56,6 +56,7 @@
     #4694d7 100%
   );
 
+  --bg-prim: url("/images/background.webp");
   --btn-angle: 90deg;
   --btn-color: linear-gradient(var(--btn-angle), #000080 0%, #000000 100%);
 
@@ -70,20 +71,19 @@
 }
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.55) transparent;
+  scrollbar-color: rgba(110, 188, 255, 0.55) transparent;
   scroll-behavior: smooth;
 }
 html,
 body {
-  background-image: var(--bg-prim);
-  background-attachment: fixed;
+background-image: var(--bg-prim);
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100vh;
   width: 100vw;
   margin: 0px;
   overflow-x: hidden;
-
   color: #fff;
-
   font-family: "ITCErasStd", serif;
 }
 
@@ -705,6 +705,33 @@ body {
   pointer-events: none;
   z-index: 1;
 }
+.box-horizontal {
+  position: relative;
+  border-radius: 30px;
+}
+.box-horizontal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: 30px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.04) 20%,
+    rgba(255, 255, 255, 0.04) 70%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+  z-index: 1;
+}
 
 /* dashboard */
 .box-dashboard {
@@ -784,6 +811,12 @@ body {
     );
 }
 
+.bg-wolf{
+  background: url("src/assets/images/wolf.webp");
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.2;
+}
 /* inside b shadow  */
 .image-inner-shadow {
   position: relative;
@@ -914,7 +947,7 @@ body {
   width: 100%;
 }
 
-.heroGlow{
+.heroGlow::after{
   position:absolute;
   left:50%;
   top:50%;
@@ -933,9 +966,12 @@ body {
 }
 
 .heroSlide{
-  width: 400px !important; /* مهم: برای overlap */
+  width: 400px !important;
+  height: 260px !important;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
-
 .glassCard{
   height: 232px;
   width: 378px;
@@ -961,9 +997,7 @@ body {
   -webkit-backdrop-filter: blur(100px);
 
   border: 1px solid rgba(255,255,255,.18);
-  box-shadow:
-    0 18px 60px rgba(0,0,0,.45),
-    inset 0 0 0 1px rgba(255,255,255,.06);
+ box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
   overflow: hidden;
 }
 
@@ -987,29 +1021,6 @@ body {
   opacity:.9;
 }
 
-.glassCard h3{
-  margin: 0 0 8px;
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.glassCard p{
-  font-weight: 600;
-  margin: 0 0 14px;
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-.glassBtn{
-  background: transparent;
-  border: 0;
-  color: #fff;
-  font-weight: 600;
-  opacity: .9;
-  cursor: pointer;
-  padding: 0;
-}
-
 /* واکنش‌گرا */
 @media (max-width: 520px){
   .heroSlide{ width: 300px; }
@@ -1020,15 +1031,28 @@ body {
   transition: transform 0.6s ease;
 }
 
-/* اسلاید فعال */
-.heroSwiper .swiper-slide-active {
-  transform: rotateZ(0deg) !important;
+/* مهم: روی swiper-slide transform نزن! */
+.heroSwiper .slideInner{
+  transition: all 0.5s ease;
+  transform-origin: center;
+  filter: drop-shadow(0 0px 10px rgba(255,255,255,.3));
 }
 
-/* .heroSwiper .swiper-slide-prev {
-  transform: rotateZ(-6deg) rotateY(20deg) !important;
+/* چپ/راست کمی ساعت‌گرد/پادساعت‌گرد */
+.heroSwiper .swiper-slide-prev .slideInner{
+  transform: rotateZ(-3deg) rotateY(-180deg);
+  filter: brightness(1.3) saturate(1.3);
 }
-
-.heroSwiper .swiper-slide-next {
-  transform: rotateZ(6deg) !important;
-} */
+.heroSwiper .swiper-slide-next .slideInner{
+  transform: rotateZ(3deg) rotateY(180deg);
+  filter: brightness(0.7) saturate(0.7);
+}
+.heroSwiper .swiper-slide-active .slideInner{
+  transform: rotateZ(0deg) rotateY(0deg); 
+  filter:brightness(1) saturate(1);
+}
+.heroSwiper .swiper-slide-active .glassCard{
+  box-shadow:
+    0 18px 60px rgba(0,0,0,.45),
+    0 0 20px rgba(255,255,255,.35);
+}

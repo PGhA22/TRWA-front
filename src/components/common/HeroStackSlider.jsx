@@ -3,20 +3,32 @@ import { EffectCoverflow, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "../../style.css";
+import { Link } from "react-router";
 
 const slides = [
-  { title: "Sharpen your mind first", desc: "Center your attention and eliminate distractions." },
-  { title: "Start focusing sec", desc: "Enter deep focus mode to work with clarity and intent." },
-  { title: "Build consistency third", desc: "Small wins every day compound fast." },
-  { title: "Stay on track", desc: "Track your progress and keep momentum." },
-  { title: "Stay on track", desc: "Track your progress and keep momentum." },
+  {
+    title: "Sharpen your mind first",
+    desc: "Center your attention and eliminate distractions.",
+    to: "/Dashboard",
+  },
+  {
+    title: "Start focusing sec",
+    desc: "Enter deep focus mode to work with clarity and intent.",
+    to: "/Dashboard",
+  },
+  {
+    title: "Build consistency third",
+    desc: "Small wins every day compound fast.",
+    to: "/Dashboard",
+  },
+  { title: "Stay on track", desc: "Track your progress and keep momentum.", to: "/Dashboard" },
+  { title: "Stay on track", desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quasi, praesentium doloremque sint quae voluptas natus unde provident! Sunt voluptatem iure officiis earum minus repellat fugit, nulla, placeat, cumque similique quis!", to: "/Dashboard" },
 ];
 
 export default function HeroStackSlider() {
   return (
     <section className="heroStackWrap">
       <div className="heroGlow" />
-
       <Swiper
         modules={[EffectCoverflow, Autoplay]}
         effect="coverflow"
@@ -24,7 +36,7 @@ export default function HeroStackSlider() {
         loop
         grabCursor
         slidesPerView={"auto"}
-        autoplay={{ delay: 2200, disableOnInteraction: false }}
+        autoplay={{ delay: 4500, disableOnInteraction: false }}
         coverflowEffect={{
           rotate: 20,
           stretch: 50,
@@ -36,13 +48,15 @@ export default function HeroStackSlider() {
       >
         {slides.map((s, i) => (
           <SwiperSlide key={i} className="heroSlide">
-            <div className="glassCard">
-              <h3>{s.title}</h3>
-              <p>{s.desc}</p>
+            <div className="slideInner">
+              <div className="glassCard flex flex-col justify-around">
+                <h3 className="mb-2 text-2xl font-bold text-center">{s.title}</h3>
+                <p className="mb-3.5 font-semibold text-sm leading-5 text-center">{s.desc}</p>
 
-              <button className="glassBtn" type="button">
-                Start Focusing →
-              </button>
+                <Link to={s.to} className="glassBtn font-semibold text-center cursor-pointer" type="button">
+                  → Start Focusing 
+                </Link>
+              </div>
             </div>
           </SwiperSlide>
         ))}
