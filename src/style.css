@@ -960,21 +960,7 @@ background-image: var(--bg-prim);
   pointer-events:none;
 }
 
-.heroSwiper{
-  width: 100%;
-  padding: 10px 0 24px;
-}
-
-.heroSlide{
-  width: 400px !important;
-  height: 260px !important;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
 .glassCard{
-  height: 232px;
-  width: 378px;
   position: relative;
   padding: 22px 22px 18px;
   color: #fff;
@@ -1019,12 +1005,6 @@ background-image: var(--bg-prim);
   mask-composite: exclude;
   pointer-events:none;
   opacity:.9;
-}
-
-/* واکنش‌گرا */
-@media (max-width: 520px){
-  .heroSlide{ width: 300px; }
-  .heroGlow{ width: 520px; height: 260px; }
 }
 
 .heroSwiper .swiper-slide {

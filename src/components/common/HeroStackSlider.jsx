@@ -27,7 +27,7 @@ const slides = [
 
 export default function HeroStackSlider() {
   return (
-    <section className="heroStackWrap">
+    <section className="heroStackWrap relative pt-6 pb-10 w-full">
       <div className="heroGlow" />
       <Swiper
         modules={[EffectCoverflow, Autoplay]}
@@ -35,7 +35,7 @@ export default function HeroStackSlider() {
         centeredSlides
         loop
         grabCursor
-        slidesPerView={"auto"}
+        slidesPerView={"2"}
         autoplay={{ delay: 4500, disableOnInteraction: false }}
         coverflowEffect={{
           rotate: 20,
@@ -44,12 +44,12 @@ export default function HeroStackSlider() {
           modifier: 2,
           slideShadows: false,
         }}
-        className="heroSwiper"
+        className="heroSwiper w-full pt-2.5 pb-6"
       >
         {slides.map((s, i) => (
-          <SwiperSlide key={i} className="heroSlide">
+          <SwiperSlide key={i} className="heroSlide h-65 flex justify-center content-center">
             <div className="slideInner">
-              <div className="glassCard flex flex-col justify-around">
+              <div className="glassCard flex flex-col justify-around w-94.5 2xl:w-120 aspect-378/232">
                 <h3 className="mb-2 text-2xl font-bold text-center">{s.title}</h3>
                 <p className="mb-3.5 font-semibold text-sm leading-5 text-center">{s.desc}</p>
 

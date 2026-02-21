@@ -21,7 +21,7 @@ function Dashboard() {
         <div className="box-dashboard mt-23 pb-4 pt-1 bg-blue-200/5 backdrop-blur-2xl">
           <h5 className="p-6 pl-[5%]">Select your goal to progress forward</h5>
           <div className="box-dashboard w-9/10 mx-auto flex justify-center">
-            <div className="w-195 flex justify-center">
+            <div className="w-195 2xl:w-250 flex justify-center">
               <HeroStackSlider />
             </div>
           </div>
@@ -29,7 +29,7 @@ function Dashboard() {
         {/* <div className="in-gradient-border gradient-border h-99/100 w-1/5 mt-px py-3 px-0.5 flex flex-col gap-4 bg-blue-50/4 rounded-4xl left-1 ">
         </div> */}
         <div className="mt-4 flex gap-9">
-          <div className=" w-63/100 aspect-63/32 px-5.5 pt-4.5 box-dashboard bg-blue-200/5 backdrop-blur-2xl relative overflow-hidden">
+          <div className="w-63/100 aspect-63/32 px-5.5 pt-4.5 box-dashboard bg-blue-200/5 backdrop-blur-2xl relative overflow-hidden">
             <div className="bg-wolf absolute inset-0 opacity-30"></div>
             <div>
               <h6 className="font-bold">Your Progress</h6>
@@ -75,7 +75,9 @@ function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="mt-4 w-full h-px bg-white/20"></div>
+        <div className="mt-4 w-full h-px bg-white/20">
+          
+        </div>
       </div>
     </>
   );

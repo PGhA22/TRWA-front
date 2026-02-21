@@ -11,6 +11,7 @@ import iconVip from "../assets/icons/vip.svg";
 import iconFaq from "../assets/icons/faq.svg";
 import iconStore from "../assets/icons/store.svg";
 import bgVip from "../assets/images/bg-vip.webp";
+import supportIcon from "../assets/images/support.webp";
 import "../style.css";
 
 export default function DashboardLayout() {
@@ -186,7 +187,17 @@ export default function DashboardLayout() {
 
   return (
     <div className="flex min-h-screen relative">
-      <div className="absolute w-10 h-10 right-2 bottom-2 rounded-full bg-green-300"></div>
+      <div className="fixed w-13 h-13 z-50 right-15 bottom-9">
+        <img
+          src={supportIcon}
+          alt="support"
+          className="w-full h-full object-contain"
+        />
+        <Link
+          to="/Support"
+          className="bg-transparent h-full w-full absolute inset-0 rounded-full"
+        ></Link>
+      </div>
       <div className="w-19/120"></div>
       <aside className="fixed h-screen w-19/120 border-r border-white/25 bg-(image:--bg-prim) bg-cover">
         <div>
@@ -220,11 +231,16 @@ export default function DashboardLayout() {
                         ? `bg-cover bg-center`
                         : "shadow-[inset_0px_0px_30px_2px_#245797]"
                     }
-                  `} style={
-    item.variant === "vip"
-      ? { backgroundImage: `url(${bgVip})`, backgroundSize: "cover", backgroundPosition: "center" }
-      : undefined
-  }
+                  `}
+                  style={
+                    item.variant === "vip"
+                      ? {
+                          backgroundImage: `url(${bgVip})`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                        }
+                      : undefined
+                  }
                 >
                   <img src={item.icon} alt="icon" className="w-5 2xl:w-5.5" />
                   {item.label}
