@@ -1020,15 +1020,15 @@ background-image: var(--bg-prim);
 
 /* چپ/راست کمی ساعت‌گرد/پادساعت‌گرد */
 .heroSwiper .swiper-slide-prev .slideInner{
-  transform: rotateZ(-3deg) rotateY(-180deg);
+  transform: rotateZ(-3deg);
   filter: brightness(1.3) saturate(1.3);
 }
 .heroSwiper .swiper-slide-next .slideInner{
-  transform: rotateZ(3deg) rotateY(180deg);
+  transform: rotateZ(3deg);
   filter: brightness(0.7) saturate(0.7);
 }
 .heroSwiper .swiper-slide-active .slideInner{
-  transform: rotateZ(0deg) rotateY(0deg); 
+  transform: rotateZ(0deg); 
   filter:brightness(1) saturate(1);
 }
 .heroSwiper .swiper-slide-active .glassCard{
