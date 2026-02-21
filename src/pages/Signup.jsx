@@ -478,7 +478,7 @@ function Signup() {
         </div>
         <span className="mt-1 2xl:mt-3">
           Bereits ein Konto?{" "}
-          <Link to="/SignIn" className="text-blue-200">
+          <Link to="/" className="text-blue-200">
             Hier anmelden
           </Link>
         </span>

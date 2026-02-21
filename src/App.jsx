@@ -15,10 +15,10 @@ function App() {
     <>
       <Routes>
         {/* TODO */}
-        <Route index element={<LandingPage />} />
+        <Route index element={<Signin />} />
+        <Route path="/Home" element={<LandingPage />} />
         <Route path="/SignUp" element={<Signup />} />
         <Route path="/Verify" element={<VerifyPass />} />
-        <Route path="/SignIn" element={<Signin />} />
         <Route path="/ResetPass" element={<ResetPass />} />
         {/* Dashboard shell */}
         <Route element={<DashboardLayout />}>

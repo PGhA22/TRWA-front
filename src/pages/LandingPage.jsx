@@ -14,7 +14,7 @@ function LandingPage() {
         <div className="glow glow3" />
         {/* content */}
         <header className="fixed w-full p-1 z-90 bg-white/3 backdrop-blur-md flex items-center-safe justify-around">
-          <Link to="/SignIn" className="rounded-full">
+          <Link to="/" className="rounded-full">
             <button className="gradient-border px-7 py-3.5 rounded-2xl font-normal text-base cursor-pointer">
               login
             </button>
@@ -31,7 +31,7 @@ function LandingPage() {
               <p className="text-xl">
                 Structured learning. Real challenges. Measurable growth
               </p>
-              <Link to="/SignIn">
+              <Link to="/">
                 <button
                   type="button"
                   onMouseEnter={() => setImgSample(true)}
@@ -74,7 +74,7 @@ function LandingPage() {
             </div>
           </div>
           <Link
-            to="/SignIn"
+            to="/"
             className={`Button block w-full mt-2 px-9 py-4 font-extrabold rounded-xl text-2xl text-center`}
           >
             Become part of it

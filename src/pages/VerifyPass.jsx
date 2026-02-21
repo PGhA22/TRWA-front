@@ -156,7 +156,7 @@ function Verify() {
           navigate("/Dashboard");
         } else {
           // FIXME: go to SignIn should not happen go dashboard should happen, but backend is weird
-          navigate("/SignIn", { state: { justVerified: true, email } });
+          navigate("/", { state: { justVerified: true, email } });
         }
         return;
       }

@@ -76,7 +76,7 @@ function ResetPass() {
       );
 
       setTimeout(() => {
-        navigate("/SignIn");
+        navigate("/");
       }, 3500);
       setLoading(false);
     } catch (error) {
@@ -166,7 +166,7 @@ function ResetPass() {
         </div>
         <span className="mt-3">
           Erinnern Sie sich an Ihr Passwort?{" "}
-          <Link to="/SignIn" className="text-blue-200">
+          <Link to="/" className="text-blue-200">
             Zur Anmeldeseite
           </Link>
         </span>
