@@ -10,9 +10,9 @@ import iconResource from "../assets/icons/resource.svg";
 import iconVip from "../assets/icons/vip.svg";
 import iconFaq from "../assets/icons/faq.svg";
 import iconStore from "../assets/icons/store.svg";
+import "../style.css";
 import bgVip from "../assets/images/bg-vip.webp";
 import supportIcon from "../assets/images/support.webp";
-import "../style.css";
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
@@ -35,15 +35,15 @@ export default function DashboardLayout() {
           <div className="text-white space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>My Courses</Link>
+              <Link to={"/Dashboard"}>My Courses</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>Continue Watching</Link>
+              <Link to={"/Dashboard"}>Continue Watching</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>All Courses</Link>
+              <Link to={"/Dashboard"}>All Courses</Link>
             </div>
           </div>
         ),
@@ -56,15 +56,15 @@ export default function DashboardLayout() {
           <div className="text-white space-y-4 text-nowrap">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>Available Challenges</Link>
+              <Link to={"/Dashboard"}>Available Challenges</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>My Challenges</Link>
+              <Link to={"/Dashboard"}>My Challenges</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>Submissions</Link>
+              <Link to={"/Dashboard"}>Submissions</Link>
             </div>
           </div>
         ),
@@ -77,11 +77,11 @@ export default function DashboardLayout() {
           <div className="text-white space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>My Groups</Link>
+              <Link to={"/Dashboard"}>My Groups</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>Discover Groups</Link>
+              <Link to={"/Dashboard"}>Discover Groups</Link>
             </div>
           </div>
         ),
@@ -94,26 +94,26 @@ export default function DashboardLayout() {
           <div className="text-white space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>Upcoming</Link>
+              <Link to={"/Dashboard"}>Upcoming</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/"}>Past Events</Link>
+              <Link to={"/Dashboard"}>Past Events</Link>
             </div>
           </div>
         ),
       },
-      { type: "link", label: "Chat Room", icon: iconChat, to: "/settings" },
+      { type: "link", label: "Chat Room", icon: iconChat, to: "/Dashboard" },
       {
         type: "link",
         label: "VIP CLUB",
         icon: iconVip,
-        to: "/users",
+        to: "/Dashboard",
         variant: "vip",
       },
-      { type: "link", label: "Resources", icon: iconResource, to: "/reports" },
-      { type: "link", label: "FAQ", icon: iconFaq, to: "/rep" },
-      { type: "link", label: "Store", icon: iconStore, to: "/rep" },
+      { type: "link", label: "Resources", icon: iconResource, to: "/Dashboard" },
+      { type: "link", label: "FAQ", icon: iconFaq, to: "/Dashboard" },
+      { type: "link", label: "Store", icon: iconStore, to: "/Dashboard" },
     ],
     [],
   );

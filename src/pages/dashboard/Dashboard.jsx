@@ -35,7 +35,9 @@ function Dashboard() {
             <div className="bg-wolf absolute inset-0 opacity-30"></div>
             <div>
               <h6 className="font-bold">Your Progress</h6>
-              <p className="mt-2 2xl:mt-4 text-xs">Track your growth and consistency</p>
+              <p className="mt-2 2xl:mt-4 text-xs">
+                Track your growth and consistency
+              </p>
               <div className="mt-7 2xl:mt-11.5 flex justify-between items-end">
                 <p className="font-bold text-xl">
                   Level <span>4</span> | <span>Wolf</span>
@@ -136,31 +138,74 @@ function Dashboard() {
           <div className="box-horizontal w-42/100 aspect-63/32 px-3.5 pt-4.5 pb-4 bg-blue-200/5 backdrop-blur-md flex flex-col justify-around">
             <h6 className="2xl:px-1">Current Mission</h6>
             <div>
-              <VideoBox src={misionVideo} title="Phase 1 - Module 5" />
+              <VideoBox
+                src={misionVideo}
+                title="The Real Wolves Academy"
+                videoText="PHASE 1 , MODULE 5"
+              />
             </div>
           </div>
         </div>
-        <div className="box-horizontal mt-4 w-105.5 h-fit px-3.5 bg-blue-200/5 backdrop-blur-md">
-          <div className="flex justify-between">
+        {/* group */}
+        <div className="box-horizontal mt-12 w-105.5 h-fit px-3.5 pb-18 pt-5 bg-blue-200/5 backdrop-blur-md">
+          <div className="flex justify-between pb-3 pl-1 pr-3">
             <div>
-              <h6>My Groups</h6>
-              <p>Your active communities</p>
+              <h6 className="font-bold">My Groups</h6>
+              <p className="mt-2 text-xs">Your active communities</p>
             </div>
             <div>
-              <Link to="/Groups/My">View All Missions</Link>
+              <Link to="/Groups/MyGroups" className="text-xs">
+                View All
+              </Link>
             </div>
           </div>
 
           <div>
-            <div className="w-full h-18 py-3.5 border border-white/20 box-border rounded-[15px] flex justify-between items-end">
-              <div className="">
-                <img src={profile} alt="Profile" className="w-9" />
+            <div className="w-full h-18 mt-4 py-3.5 border border-white/20 box-border rounded-[15px] flex justify-between items-end px-6">
+              <div className="flex items-center gap-5">
+                <img src={profile} alt="Profile" className="w-9 h-9" />
                 <div>
                   <h6>Early Risers</h6>
                   <p>Member · New activity</p>
                 </div>
               </div>
-              <div className="">g</div>
+              <div>
+                <Link to={"/"}>
+                  <svg
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 300 300"
+                    className="w-4 h-4 inline pointer-events-none"
+                    fill="#FFF"
+                  >
+                    <path
+                      xmlns="http://www.w3.org/2000/svg"
+                      d="M0,147.66c2.36-7.03,7.34-9.47,14.61-9.45c80.33,0.13,160.66,0.08,240.99,0.08c1.15,0,2.31,0,4.18,0   c-1.17-1.22-1.91-2.03-2.69-2.8c-12.66-12.61-25.31-25.22-37.98-37.8c-3.44-3.42-4.57-7.49-3.21-12.06   c1.26-4.24,4.25-6.96,8.59-7.95c4.49-1.03,8.21,0.49,11.41,3.68c14.17,14.12,28.37,28.22,42.56,42.33   c5.26,5.23,10.64,10.35,15.71,15.76c2.27,2.43,3.9,5.47,5.83,8.23c0,1.56,0,3.12,0,4.69c-1.92,2.76-3.49,5.88-5.82,8.23   c-19.28,19.37-38.69,38.61-58.08,57.87c-5.17,5.14-11.89,5.62-16.77,1.28c-5.21-4.63-5.36-12.22-0.2-17.38   c12.62-12.64,25.3-25.22,37.97-37.81c0.75-0.74,1.7-1.27,2.56-1.9c-0.15-0.3-0.3-0.61-0.45-0.91c-1.11,0-2.22,0-3.33,0   c-80.43,0-160.85-0.05-241.28,0.08c-7.26,0.01-12.25-2.42-14.61-9.45C0,150.78,0,149.22,0,147.66z"
+                    />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="addGroup">
+            <div className="w-full h-18 mt-4 py-3.5 border border-white/20 box-border rounded-[15px] flex justify-center items-center px-6">
+              <div className="h-3/4 aspect-square rounded-[15px] flex justify-center items-center">
+                <Link to="/Group/DiscoverGroups">
+                  <svg
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 300 300"
+                    className="w-4 h-4 inline"
+                    fill="#FFF"
+                  >
+                    <path
+                      xmlns="http://www.w3.org/2000/svg"
+                      d="M131.25,0c12.5,0,25,0,37.5,0c0,43.69,0,87.39,0,131.25c44,0,87.63,0,131.25,0c0,12.5,0,25,0,37.5   c-43.69,0-87.39,0-131.25,0c0,44,0,87.63,0,131.25c-12.5,0-25,0-37.5,0c0-43.69,0-87.39,0-131.25c-44,0-87.63,0-131.25,0   c0-12.5,0-25,0-37.5c43.69,0,87.39,0,131.25,0C131.25,87.25,131.25,43.62,131.25,0z"
+                    />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
