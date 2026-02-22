@@ -8,6 +8,7 @@ import { http } from "../../server/http";
 import misionVideo from "../../assets/vid/mission.mp4";
 import profile from "../../assets/images/profile.webp";
 import fireIcon from "../../assets/images/fire.webp";
+import wolf from "../../assets/images/wolf.webp";
 
 function Dashboard() {
   // TODO_FIX_pageTitle
@@ -21,7 +22,7 @@ function Dashboard() {
     <>
       <div className="w-[89.8%] mx-auto flex flex-col text-white">
         <div className="box-dashboard mt-23 pb-4 pt-1 bg-blue-200/5 backdrop-blur-md">
-          <h5 className="p-6 pl-[5%]">Select your goal to progress forward</h5>
+          <h5 className="p-6 pl-[5%] font-bold">Select your goal to progress forward</h5>
           <div className="box-dashboard w-9/10 mx-auto flex justify-center">
             <div className="w-195 2xl:w-250 flex justify-center">
               <HeroStackSlider />
@@ -32,8 +33,8 @@ function Dashboard() {
         </div> */}
         <div className="mt-4 flex gap-9">
           <div className="w-63/100 aspect-63/32 px-5.5 2xl:px-7.5 pt-4.5 2xl:pt-6.5 box-dashboard bg-blue-200/5 backdrop-blur-md relative overflow-hidden">
-            <div className="bg-wolf absolute inset-0 opacity-30"></div>
-            <div>
+            <div className="absolute inset-0 -z-10 opacity-60 bg-cover bg-[center center] -mt-8 brightness-50" style={{ backgroundImage: `url(${wolf})`}}></div>
+            <div className="">
               <h6 className="font-bold">Your Progress</h6>
               <p className="mt-2 2xl:mt-4 text-xs">
                 Track your growth and consistency
@@ -135,8 +136,8 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="box-horizontal w-42/100 aspect-63/32 px-3.5 pt-4.5 pb-4 bg-blue-200/5 backdrop-blur-md flex flex-col justify-around">
-            <h6 className="2xl:px-1">Current Mission</h6>
+          <div className="box-horizontal w-42/100 aspect-63/32 px-3.5 pt-4.5 pb-4 bg-blue-200/5 backdrop-blur-[2px] flex flex-col justify-around">
+            <h6 className="2xl:px-1 font-bold">Current Mission</h6>
             <div>
               <VideoBox
                 src={misionVideo}
