@@ -76,7 +76,7 @@
 }
 html,
 body {
-background-image: var(--bg-prim);
+  background-image: var(--bg-prim);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
@@ -734,6 +734,84 @@ background-image: var(--bg-prim);
   z-index: 1;
 }
 
+/* dashboard Layout */
+/* hide scrollbar menu */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.box-btnMenu {
+  position: relative;
+}
+.box-btnMenu::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: 16px;
+  background: linear-gradient(
+    10deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 200, 0.05) 45%,
+    rgba(255, 255, 255, 0) 55%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btnBorderGrad {
+  position: relative;
+  isolation: isolate;
+}
+.btnBorderGrad::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  z-index: 0;
+  background: transparent;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
+}
+
+.btnBorderGrad > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Active */
+.btnBorderActive::before {
+  background: linear-gradient(
+    100deg,
+    #001a4e,
+    #003dab,
+    #40b7ff,
+    #ffffff,
+    #40b7ff,
+    #0d131c
+  );
+}
+
+/* VIP */
+.btnBorderVip::before {
+  background: linear-gradient(100deg, #f5c857, #ffffff, #f5c857, #0d131c);
+}
 /* dashboard */
 .box-dashboard {
   position: relative;
@@ -773,7 +851,6 @@ background-image: var(--bg-prim);
   inset: 0;
   padding: 1.5px;
   border-radius: 15px;
-
   background: linear-gradient(
     5deg,
     rgba(255, 255, 255, 0.45) 0%,
@@ -936,119 +1013,125 @@ background-image: var(--bg-prim);
 }
 
 /* carousel */
-.heroStackWrap{
+.heroStackWrap {
   position: relative;
   padding: 24px 0 40px;
   width: 100%;
 }
 
-.heroGlow::after{
-  position:absolute;
-  left:50%;
-  top:50%;
+.heroGlow::after {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   transform: translate(-50%, -55%);
   width: 720px;
   height: 520px;
-  background: radial-gradient(circle, rgba(64,183,255,.35), rgba(0,0,0,0) 60%);
+  background: radial-gradient(
+    circle,
+    rgba(64, 183, 255, 0.35),
+    rgba(0, 0, 0, 0) 60%
+  );
   filter: blur(100px);
-  opacity: .95;
-  pointer-events:none;
+  opacity: 0.95;
+  pointer-events: none;
 }
 
-.glassCard{
+.glassCard {
   position: relative;
   padding: 22px 22px 18px;
   color: #fff;
 
   border-radius: 30px;
 
-  background: 
+  background:
     linear-gradient(#061325, #0d223f) padding-box,
     linear-gradient(
-      92.19deg,
-      #cfdfff 1.6%,
-      #003dab 30.5%,
-      #40b7ff 35.74%,
-      #ffffff 69.36%,
-      #40b7ff 81.84%,
-      #cfdfff 97.29%
-    ) border-box;
+        92.19deg,
+        #cfdfff 1.6%,
+        #003dab 30.5%,
+        #40b7ff 35.74%,
+        #ffffff 69.36%,
+        #40b7ff 81.84%,
+        #cfdfff 97.29%
+      )
+      border-box;
 
   backdrop-filter: blur(100px);
   -webkit-backdrop-filter: blur(100px);
 
- box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   overflow: hidden;
 }
 
-.glassCard::before{
-  content:"";
-  position:absolute;
-  inset:0;
+.glassCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   border-radius: 32px;
   padding: 4px;
-  background: linear-gradient(90deg,
-    rgba(207,223,255,.55),
-    rgba(0,61,171,.55),
-    rgba(64,183,255,.55),
-    rgba(255,255,255,.15),
-    rgba(64,183,255,.55)
+  background: linear-gradient(
+    90deg,
+    rgba(207, 223, 255, 0.55),
+    rgba(0, 61, 171, 0.55),
+    rgba(64, 183, 255, 0.55),
+    rgba(255, 255, 255, 0.15),
+    rgba(64, 183, 255, 0.55)
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  pointer-events:none;
-  opacity:.9;
+  pointer-events: none;
+  opacity: 0.9;
 }
 
 .heroSwiper .swiper-slide {
   transition: transform 0.6s ease;
 }
 
-/* مهم: روی swiper-slide transform نزن! */
-.heroSwiper .slideInner{
+.heroSwiper .slideInner {
   transition: all 0.5s ease;
   transform-origin: center;
 }
 
-/* چپ/راست کمی ساعت‌گرد/پادساعت‌گرد */
-.heroSwiper .swiper-slide-prev .slideInner{
+.heroSwiper .swiper-slide-prev .slideInner {
   transform: rotateZ(-3deg);
   filter: brightness(0.7) saturate(0.7);
 }
-.heroSwiper .swiper-slide-next .slideInner{
+.heroSwiper .swiper-slide-next .slideInner {
   transform: rotateZ(3deg);
   filter: brightness(0.7) saturate(0.7);
 }
-.heroSwiper .swiper-slide-active .slideInner{
-  transform: rotateZ(0deg); 
-  filter:brightness(1) saturate(1);
+.heroSwiper .swiper-slide-active .slideInner {
+  transform: rotateZ(0deg);
+  filter: brightness(1) saturate(1);
 }
-.heroSwiper .swiper-slide-active .glassCard{
+.heroSwiper .swiper-slide-active .glassCard {
   box-shadow:
-    0 18px 60px rgba(0,0,0,.45),
-    0 0 20px rgba(255,255,255,.35);
+    0 18px 60px rgba(0, 0, 0, 0.45),
+    0 0 20px rgba(255, 255, 255, 0.35);
 }
 
-.heroSwiperFrame{
-  overflow-x: hidden;   /* چپ/راست قطع بشه */
-  overflow-y: visible;  /* بالا/پایین برای سایه آزاد */
-  padding: 40px 0;      /* فضای سایه بالا/پایین */
+.heroSwiperFrame {
+  overflow-x: hidden;
+  overflow-y: visible;
+  padding: 40px 0;
 }
 
-.heroSwiper{
-  overflow: visible !important; /* برای اینکه سایه بریده نشه */
+.heroSwiper {
+  overflow: visible !important;
 }
 
-/* همه اسلایدها مخفی */
-.heroSwiper .swiper-slide{
+.heroSwiper .swiper-slide {
   opacity: 0;
-  transition: opacity 0.3 s ease, transform .5s ease;
+  transition:
+    opacity 0.3 s ease,
+    transform 0.5s ease;
 }
 
-/* فقط این سه‌تا دیده بشن */
 .heroSwiper .swiper-slide-active,
 .heroSwiper .swiper-slide-prev,
-.heroSwiper .swiper-slide-next{
+.heroSwiper .swiper-slide-next {
   opacity: 1;
 }

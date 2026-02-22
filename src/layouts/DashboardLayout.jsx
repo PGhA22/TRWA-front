@@ -12,6 +12,7 @@ import iconFaq from "../assets/icons/faq.svg";
 import iconStore from "../assets/icons/store.svg";
 import "../style.css";
 import bgVip from "../assets/images/bg-vip.webp";
+import bgBtnActive from "../assets/images/background.webp";
 import supportIcon from "../assets/images/support.webp";
 
 export default function DashboardLayout() {
@@ -52,6 +53,7 @@ export default function DashboardLayout() {
         type: "panel",
         label: "Challenges",
         icon: iconChallenge,
+        to: "/Challenges",
         content: (
           <div className="text-white space-y-4 text-nowrap">
             <div className="flex items-center gap-2.5">
@@ -73,6 +75,7 @@ export default function DashboardLayout() {
         type: "panel",
         label: "Groups",
         icon: iconGroup,
+        to: "/Groups",
         content: (
           <div className="text-white space-y-4">
             <div className="flex items-center gap-2.5">
@@ -90,6 +93,7 @@ export default function DashboardLayout() {
         type: "panel",
         label: "Live & Events",
         icon: iconLive,
+        to: "/Events",
         content: (
           <div className="text-white space-y-4">
             <div className="flex items-center gap-2.5">
@@ -111,7 +115,12 @@ export default function DashboardLayout() {
         to: "/Dashboard",
         variant: "vip",
       },
-      { type: "link", label: "Resources", icon: iconResource, to: "/Dashboard" },
+      {
+        type: "link",
+        label: "Resources",
+        icon: iconResource,
+        to: "/Dashboard",
+      },
       { type: "link", label: "FAQ", icon: iconFaq, to: "/Dashboard" },
       { type: "link", label: "Store", icon: iconStore, to: "/Dashboard" },
     ],
@@ -186,7 +195,7 @@ export default function DashboardLayout() {
   const showPanel = activeItem?.type === "panel";
 
   return (
-    <div className="flex min-h-screen relative">
+    <div className="flex min-h-screen relative no-caret">
       <div className="fixed w-13 h-13 z-50 right-15 bottom-9">
         <img
           src={supportIcon}
@@ -199,14 +208,14 @@ export default function DashboardLayout() {
         ></Link>
       </div>
       <div className="w-19/120"></div>
-      <aside className="fixed h-screen w-19/120 border-r border-white/25 bg-(image:--bg-prim) bg-cover">
+      <aside className="fixed h-screen w-19/120 border-r border-white/25 bg-(image:--bg-prim) bg-cover flex flex-col">
         <div>
           <img src="/trwa_logo.png" alt="trwa_logo" className="w-51/76 -mt-2" />
         </div>
 
         <div
           ref={menuRef}
-          className="relative flex flex-col gap-5 2xl:gap-6 px-5 2xl:px-7 overflow-y-auto"
+          className="hide-scrollbar flex-1 relative flex flex-col gap-5 2xl:gap-6 px-5 2xl:px-7 overflow-y-auto min-h-0"
         >
           {items.map((item, index) => {
             const isRouteActive =
@@ -218,19 +227,28 @@ export default function DashboardLayout() {
               (item.type === "link" && isRouteActive) || isPanelActive;
 
             return (
-              <div key={index} className="flex flex-col">
+              <div contenteditable={false} key={index} className="flex flex-col">
                 <button
                   type="button"
                   onClick={() => handleItemClick(item, index)}
                   className={`
                     relative z-30 font-semibold 
-                    ${isActive ? "dashboardBtnActive h-10" : "h-10"}
+                     ${
+                       !isActive && item.variant !== "vip"
+                         ? "shadow-[inset_0px_0px_30px_2px_#245797] box-btnMenu"
+                         : ""
+                     }
                     py-2.5 px-4 2xl:px-9 rounded-2xl flex gap-1.5 2xl:gap-3.5 items-center w-full whitespace-nowrap
                     ${
                       item.variant === "vip"
                         ? `bg-cover bg-center`
                         : "shadow-[inset_0px_0px_30px_2px_#245797]"
                     }
+                    ${item.variant === "vip"
+  ? "btnBorderGrad btnBorderVip"
+  : isActive
+  ? "btnBorderGrad btnBorderActive"
+  : ""}
                   `}
                   style={
                     item.variant === "vip"
@@ -239,7 +257,14 @@ export default function DashboardLayout() {
                           backgroundSize: "cover",
                           backgroundPosition: "center",
                         }
-                      : undefined
+                      : isActive
+                        ? {
+                            backgroundImage: `url(${bgBtnActive})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            filter: "brightness(1.1) saturate(200%)",
+                          }
+                        : undefined
                   }
                 >
                   <img src={item.icon} alt="icon" className="w-5 2xl:w-5.5" />

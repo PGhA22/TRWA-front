@@ -20,10 +20,10 @@ function Dashboard() {
 
   return (
     <>
-      <div className="w-[89.8%] mx-auto flex flex-col text-white">
-        <div className="box-dashboard mt-23 pb-4 pt-1 bg-blue-200/5 backdrop-blur-md">
+      <div className="w-[89.8%] mx-auto flex flex-col text-white no-caret">
+        <div className="box-dashboard mt-23 pb-4 pt-1 bg-blue-200/5 backdrop-blur-xs">
           <h5 className="p-6 pl-[5%] font-bold">Select your goal to progress forward</h5>
-          <div className="box-dashboard w-9/10 mx-auto flex justify-center">
+          <div className=" w-9/10 mx-auto flex justify-center">
             <div className="w-195 2xl:w-250 flex justify-center">
               <HeroStackSlider />
             </div>
@@ -148,7 +148,7 @@ function Dashboard() {
           </div>
         </div>
         {/* group */}
-        <div className="box-horizontal mt-12 w-105.5 h-fit px-3.5 pb-18 pt-5 bg-blue-200/5 backdrop-blur-md">
+        <div className="box-horizontal mt-6 w-105.5 h-fit px-3.5 pb-18 pt-5 bg-blue-200/5 backdrop-blur-xs">
           <div className="flex justify-between pb-3 pl-1 pr-3">
             <div>
               <h6 className="font-bold">My Groups</h6>
@@ -171,6 +171,7 @@ function Dashboard() {
                 </div>
               </div>
               <div>
+                {/* TODO-link-Discover-group */}
                 <Link to={"/"}>
                   <svg
                     version="1.1"
