@@ -24,7 +24,7 @@ function Dashboard() {
         <div className="box-dashboard mt-23 pb-4 pt-1 bg-blue-200/5 backdrop-blur-xs">
           <h5 className="p-6 pl-[5%] font-bold">Select your goal to progress forward</h5>
           <div className=" w-9/10 mx-auto flex justify-center">
-            <div className="w-195 2xl:w-250 flex justify-center">
+            <div className="w-195 2xl:w-250 flex justify-center overflow-x-hidden">
               <HeroStackSlider />
             </div>
           </div>

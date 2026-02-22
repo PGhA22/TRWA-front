@@ -11,9 +11,11 @@ import iconVip from "../assets/icons/vip.svg";
 import iconFaq from "../assets/icons/faq.svg";
 import iconStore from "../assets/icons/store.svg";
 import "../style.css";
+
 import bgVip from "../assets/images/bg-vip.webp";
 import bgBtnActive from "../assets/images/background.webp";
 import supportIcon from "../assets/images/support.webp";
+import profile from "../assets/images/profile.webp";
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
@@ -215,7 +217,7 @@ export default function DashboardLayout() {
 
         <div
           ref={menuRef}
-          className="hide-scrollbar flex-1 relative flex flex-col gap-5 2xl:gap-6 px-5 2xl:px-7 overflow-y-auto min-h-0"
+          className="hide-scrollbar flex-1 relative flex flex-col gap-5 2xl:gap-6 px-5 2xl:px-7 pb-3 overflow-y-auto min-h-0"
         >
           {items.map((item, index) => {
             const isRouteActive =
@@ -227,12 +229,16 @@ export default function DashboardLayout() {
               (item.type === "link" && isRouteActive) || isPanelActive;
 
             return (
-              <div contenteditable={false} key={index} className="flex flex-col">
+              <div
+                contenteditable={false}
+                key={index}
+                className="flex flex-col"
+              >
                 <button
                   type="button"
                   onClick={() => handleItemClick(item, index)}
                   className={`
-                    relative z-30 font-semibold 
+                    relative z-30 font-semibold
                      ${
                        !isActive && item.variant !== "vip"
                          ? "shadow-[inset_0px_0px_30px_2px_#245797] box-btnMenu"
@@ -244,11 +250,13 @@ export default function DashboardLayout() {
                         ? `bg-cover bg-center`
                         : "shadow-[inset_0px_0px_30px_2px_#245797]"
                     }
-                    ${item.variant === "vip"
-  ? "btnBorderGrad btnBorderVip"
-  : isActive
-  ? "btnBorderGrad btnBorderActive"
-  : ""}
+                    ${
+                      item.variant === "vip"
+                        ? "btnBorderGrad btnBorderVip"
+                        : isActive
+                          ? "btnBorderGrad btnBorderActive"
+                          : ""
+                    }
                   `}
                   style={
                     item.variant === "vip"
@@ -305,6 +313,28 @@ export default function DashboardLayout() {
               </div>
             </div>
           )}
+        </div>
+        {/* profile card */}
+        <div className="px-3.25 pt-8 pb-10 rounded-t-[30px] shadow-[inset_0_0_20px_rgba(255,255,255,0.25)]">
+          <div>
+            <div className="btnBorderGrad profileBorder py-3 px-2.5 rounded-[30px] flex gap-2 font-semibold">
+              <div className="btnBorderGrad profileImgBorder w-11 h-11 rounded-full p-px">
+                <img src={profile} alt="profile" className="w-full h-full" />
+              </div>
+              <div>
+                <b className=" text-sm">Your Profile</b>
+                <p className="text-xs">Level <span>4</span> · <span>Wolf</span></p>
+              </div>
+            </div>
+            <p className="mt-7 text-xs text-center">XP <span>2,675</span>  |  Streak <span>12</span> days</p>
+            {/* progres bar */}
+            <div className="w-full h-1 mt-5 bg-white/30 rounded-full">
+              <div
+                className="h-full rounded-full bg-[radial-gradient(ellipse_120%_180%_at_50%_50%,#ffffff_0%,#40b7ff_20%,#103365_40%,#103365_100%)]"
+                style={{ width: "80%" }}
+              ></div>
+            </div>
+          </div>
         </div>
       </aside>
 

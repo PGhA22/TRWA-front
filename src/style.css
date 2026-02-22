@@ -807,12 +807,33 @@ body {
     #0d131c
   );
 }
-
 /* VIP */
 .btnBorderVip::before {
   background: linear-gradient(100deg, #f5c857, #ffffff, #f5c857, #0d131c);
 }
-/* dashboard */
+/* profileBorder */
+.profileBorder::before {
+  background: linear-gradient(
+    90deg,
+    #1F5394,
+    #1F5394,
+    #FFFFFF,
+    #ffffff,
+    #00598F,
+    #0D131C
+  );
+}
+/* profileImgBorder */
+.profileImgBorder::before {
+  background: linear-gradient(
+    90deg,
+    #FFFFFF,
+    #40B7FF,
+    #021958
+  );
+}
+
+/* ##### dashboard */
 .box-dashboard {
   position: relative;
   border-radius: 30px;
