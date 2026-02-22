@@ -225,7 +225,7 @@ export default function DashboardLayout() {
                   className={`
                     relative z-30 font-semibold 
                     ${isActive ? "dashboardBtnActive h-10" : "h-10"}
-                    py-2.5 pl-5 2xl:pl-9 rounded-2xl flex gap-2.5 2xl:gap-3.5 items-center w-full
+                    py-2.5 px-4 2xl:px-9 rounded-2xl flex gap-1.5 2xl:gap-3.5 items-center w-full whitespace-nowrap
                     ${
                       item.variant === "vip"
                         ? `bg-cover bg-center`
@@ -274,7 +274,7 @@ export default function DashboardLayout() {
                     "opacity 380ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1)",
                   willChange: "opacity, transform",
                 }}
-                className="mt-2 pl-[26%]"
+                className="mt-2 px-[18%] 2xl:px-[25%] wrap-normal"
               >
                 {activeItem?.content}
               </div>
