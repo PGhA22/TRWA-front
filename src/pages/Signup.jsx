@@ -282,7 +282,7 @@ function Signup() {
             setIsEnd(swiper.isEnd);
           }}
         >
-          <SwiperSlide className="h-full flex! items-center justify-center m-auto">
+          <SwiperSlide className="h-full flex! items-center justify-center m-auto -mt-3 mb-3">
             <div className="flex flex-row gap-2 w-10/12 max-w-md relative">
               <div className="in-glass-border-ch glass-border-ch in-gradient-border gradient-border w-1/2 rounded-4xl my-1.5 flex-1 min-w-0 relative">
                 <input
@@ -343,7 +343,7 @@ function Signup() {
               </span>
             </div>
           </SwiperSlide>
-          <SwiperSlide className="h-full flex! items-center justify-center">
+          <SwiperSlide className="h-full flex! items-center justify-center ">
             <FormInput
               parentClassName="w-10/12 max-w-md"
               wrapperClassName="w-10/12 max-w-md my-1.5"
@@ -383,7 +383,7 @@ function Signup() {
               errorClassName=""
             />
           </SwiperSlide>
-          <SwiperSlide className="h-full flex! flex-col items-center justify-center">
+          <SwiperSlide className="h-full flex! flex-col items-center justify-center gap-3 -mt-3 mb-3">
             <div className="w-10/12 max-w-md my-1.5 relative">
               <div className="in-glass-border-ch glass-border-ch in-gradient-border gradient-border rounded-4xl relative">
                 <svg
@@ -458,7 +458,7 @@ function Signup() {
               errorText="Ungültige E-Mail-Adress"
             />
           </SwiperSlide>
-          <SwiperSlide className="h-full flex! flex-col items-center justify-center">
+          <SwiperSlide className="h-full flex! flex-col items-center justify-center gap-3 -mt-3">
             <FormInput
               parentClassName="w-10/12 max-w-md"
               wrapperClassName="w-10/12 max-w-md my-1.5"
