@@ -205,7 +205,6 @@ function Signup() {
     }
     // server
     try {
-      // TODO-url-singUp
       const respon = await http.post("/api/accounts/register/", userData);
       console.log(respon);
 
@@ -251,7 +250,7 @@ function Signup() {
   }
   return (
     <>
-      <div className="my-20 text-base h-screen flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center overflow-hidden">
+      <div className="my-20 text-base flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center overflow-hidden">
         <h3 className="text-[47px] font-extrabold w-10/12">
           Erstellen Sie Ihr Konto
         </h3>
