@@ -815,22 +815,17 @@ body {
 .profileBorder::before {
   background: linear-gradient(
     90deg,
-    #1F5394,
-    #1F5394,
-    #FFFFFF,
+    #1f5394,
+    #1f5394,
     #ffffff,
-    #00598F,
-    #0D131C
+    #ffffff,
+    #00598f,
+    #0d131c
   );
 }
 /* profileImgBorder */
 .profileImgBorder::before {
-  background: linear-gradient(
-    90deg,
-    #FFFFFF,
-    #40B7FF,
-    #021958
-  );
+  background: linear-gradient(90deg, #ffffff, #40b7ff, #021958);
 }
 
 /* ##### dashboard */
@@ -1061,22 +1056,9 @@ body {
   position: relative;
   padding: 22px 22px 18px;
   color: #fff;
-
   border-radius: 30px;
 
-  background:
-    linear-gradient(#061325, #0d223f) padding-box,
-    linear-gradient(
-        92.19deg,
-        #cfdfff 1.6%,
-        #003dab 30.5%,
-        #40b7ff 35.74%,
-        #ffffff 69.36%,
-        #40b7ff 81.84%,
-        #cfdfff 97.29%
-      )
-      border-box;
-
+  background: linear-gradient(90deg, #061325f9 0%, #0d223ff9 100%), border-box;
   backdrop-filter: blur(100px);
   -webkit-backdrop-filter: blur(100px);
 
@@ -1089,7 +1071,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 32px;
-  padding: 4px;
+  padding: 2px;
   background: linear-gradient(
     90deg,
     rgba(207, 223, 255, 0.55),
@@ -1104,7 +1086,7 @@ body {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .heroSwiper .swiper-slide {

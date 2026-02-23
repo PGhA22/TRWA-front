@@ -211,42 +211,39 @@ function Signup() {
 
       const otpId = respon?.data?.otp_id;
 
-      if (!otpId) {
-        showError("Registrierung fehlgeschlagen. Bitte erneut versuchen.");
-        setLoading(false);
-        return;
-      }
+      // if (!otpId) {
+      //   showError("Registrierung fehlgeschlagen. Bitte erneut versuchen.");
+      //   setLoading(false);
+      //   return;
+      // }
 
-      navigate("/Verify", {
-        state: {
-          mode: "email_verify",
-          otp_id: otpId,
-          email: userEmail,
-          phone: userPhone,
-          contactType: "E-Mail-Adresse",
-          twoFactor: twoFactor,
-        },
-      });
+      // navigate("/Verify", {
+      //   state: {
+      //     mode: "email_verify",
+      //     otp_id: otpId,
+      //     email: userEmail,
+      //     phone: userPhone,
+      //     contactType: "E-Mail-Adresse",
+      //     twoFactor: twoFactor,
+      //   },
+      // });
+      navigate("/");
     } catch (error) {
       const status = error?.response?.status;
       const errorData = error?.response?.data;
       console.log("status", status);
       console.log("errorData", errorData);
+      console.log(error?.response);
 
-      if (status >= 500 || !status) {
-        showError("Bitte versuchen Sie es erneut");
-      } else if (status === 409) {
-        showError(
-          "Diese E-Mail-Adresse oder Mobilnummer ist bereits registriert.",
-        );
-      } else if (errorData?.detail) {
-        showError(String(errorData.detail));
-      } else if (errorData?.error) {
-        showError(String(errorData.error));
-      } else if (errorData?.msg) {
-        showError(String(errorData.msg));
+      if (errorData) {
+        if (typeof errorData === "object") {
+          const message = Object.values(errorData).flat().join(" ");
+          showError(message);
+        } else {
+          showError(String(errorData));
+        }
       } else {
-        showError("Ungültige Anfrage");
+        showError("Bitte versuchen Sie es erneut");
       }
     } finally {
       setLoading(false);

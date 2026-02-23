@@ -77,16 +77,12 @@ function Signin() {
       navigate("/Dashboard");
     } catch (error) {
       const status = error?.response?.status;
-      const errorData = error?.response?.data;
+      const errorData = error?.response?.data?.error;
       console.log(status);
       console.log(errorData);
 
-      if (
-        errorData?.error === "wrong-password" ||
-        errorData?.error === "user-not-found" ||
-        status === 401
-      ) {
-        showError("E-Mail-Adresse, Mobilnummer oder Passwort ist falsch");
+      if (errorData) {
+        showError(errorData);
       } else {
         showError("Bitte versuchen Sie es erneut");
       }
