@@ -7,6 +7,7 @@ export default function FormInput({
   errorId,
   errorClassName = "",
   errorText = null,
+  ref = null,
 }) {
   return (
     <div
@@ -16,6 +17,7 @@ export default function FormInput({
         className={`in-glass-border-ch glass-border-ch in-gradient-border gradient-border rounded-4xl  flex-1 min-w-1 ${wrapperClassName}`}
       >
         <input
+        ref={ref}
           {...inputProps}
           className={`glass-input border-none w-full px-3 py-3 2xl:py-3.5 rounded-4xl outline-none text-white backdrop-blur-sm bg-radial from-60% from-transparent to-black/10 ${inputClassName}`}
         />

@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { http } from "../server/http";
 import "../style.css";
 import FormInput from "../components/ui/FormInput";
 import Button from "../components/ui/Button";
+import SignIn_withGoogle from "../components/ui/SignIn_withGoogle";
 
 function Signin() {
   // TODO_FIX_pageTitle
@@ -17,6 +18,16 @@ function Signin() {
   const [errorOpen, setErrorOpen] = useState(false);
   // const [keepSignedIn, setKeepSignedIn] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // auto-focus
+  const focusInput = useRef(null);
+  useEffect(() => {
+    const t = setTimeout(() => {
+      focusInput.current?.focus();
+    }, 0);
+    return () => clearTimeout(t);
+  }, []);
+
   // errors
   function showError(msg) {
     setError(msg);
@@ -94,7 +105,34 @@ function Signin() {
 
   return (
     <>
-      <div className="text-base h-screen flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center">
+      <div
+        className="text-base h-screen flex flex-col items-center justify-center gap-4 2xl:gap-8 text-white font-semibold text-center"
+        onKeyDownCapture={(e) => {
+          if (e.key !== "Enter") return;
+          const target = e.target;
+          if (!(target instanceof HTMLElement)) return;
+          const tag = target.tagName.toLowerCase();
+          if (!["input", "select"].includes(tag)) return;
+          e.preventDefault();
+          const container = e.currentTarget;
+          const focusables = Array.from(
+            container.querySelectorAll("input, select"),
+          ).filter((el) => {
+            const node = el;
+            if (node.hasAttribute("disabled")) return false;
+            if (node.getAttribute("type") === "hidden") return false;
+            const style = window.getComputedStyle(node);
+            if (style.display === "none" || style.visibility === "hidden")
+              return false;
+            return true;
+          });
+
+          const idx = focusables.indexOf(target);
+          if (idx >= 0 && idx < focusables.length - 1) {
+            focusables[idx + 1].focus();
+          }
+        }}
+      >
         <h3 className="text-[47px] font-extrabold w-10/12">
           Willkommen zurück!
         </h3>
@@ -103,13 +141,21 @@ function Signin() {
           Admin-Panel zuzugreifen.
         </p>
         <FormInput
+          ref={focusInput}
           parentClassName="w-10/12 max-w-md"
           wrapperClassName="w-10/12 max-w-md my-1.5"
           inputProps={{
+            autoFocus: true,
             id: "identifier",
             type: "text",
             placeholder: "E-Mail-Adresse oder Mobilnummer",
             onChange: (e) => setContact(e.target.value),
+            onKeyDown: (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                checkInput();
+              }
+            },
           }}
           inputClassName="pl-8"
           icon={
@@ -140,6 +186,12 @@ function Signin() {
             placeholder: "Passwort",
             value: password,
             onChange: (e) => setPassword(e.target.value),
+            onKeyDown: (e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                checkInput();
+              }
+            },
           }}
           inputClassName="pl-8"
           icon={
@@ -204,11 +256,7 @@ function Signin() {
           <span className="mx-3">oder weiter mit</span>
           <hr className="w-1/5 grow mt-1" />
         </div>
-        <div className="flex gap-2.5">
-          <button className="bg-[#00008088] py-1 px-2 rounded-lg cursor-pointer">
-            Google
-          </button>
-        </div>
+        <SignIn_withGoogle />
       </div>
     </>
   );
