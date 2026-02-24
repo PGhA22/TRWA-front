@@ -34,6 +34,45 @@ function Signup() {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
 
+  // auto-focus
+const firstRef = useRef(null);
+const lastRef = useRef(null);
+const birthRef = useRef(null);
+const phoneRef = useRef(null);
+const emailRef = useRef(null);
+const passRef = useRef(null);
+const confirmRef = useRef(null);
+
+const lockRef = useRef(false);
+const lock = () => {
+  lockRef.current = true;
+  setTimeout(() => (lockRef.current = false), 350);
+};
+
+const focusByIndex = (swiper) => {
+  const i = swiper?.activeIndex ?? swiperRef.current?.activeIndex ?? 0;
+
+  if (i === 0) firstRef.current?.focus();
+  if (i === 1) birthRef.current?.focus();
+  if (i === 2) phoneRef.current?.focus();
+  if (i === 3) passRef.current?.focus();
+};
+
+const go = (index) => {
+  if (lockRef.current) return;
+  lock();
+  swiperRef.current?.slideTo(index);
+};
+
+const onEnter = (next) => (e) => {
+  if (e.key !== "Enter") return;
+  if (e.repeat) return;
+  e.preventDefault();
+  e.stopPropagation();
+  if (lockRef.current) return;
+  next?.();
+};
+
   // errors
   function showError(msg) {
     setError(msg);
@@ -118,56 +157,26 @@ function Signup() {
       require_otp: twoFactor,
     };
 
-    let hasError = false;
     // userChecker
     if (userGName === "" || userFName === "") {
       document.querySelector("#errorUser").classList.remove("hidden");
       document.querySelector("#svgUser").classList.add("fill-red-500");
-      hasError = true;
+      swiperRef.current?.slideTo(0);
+      setLoading(false);
+      return;
     } else {
       document.querySelector("#errorUser").classList.add("hidden");
       document.querySelector("#svgUser").classList.remove("fill-red-500");
     }
-    // phone_checker
-    if (userPhone === "") {
-      document.querySelector("#errorPhone").classList.remove("hidden");
-      document.querySelector("#svgPhone").classList.add("fill-red-500");
-      hasError = true;
-    } else {
-      document.querySelector("#errorPhone").classList.add("hidden");
-      document.querySelector("#svgPhone").classList.remove("fill-red-500");
-    }
-    let phonePattern = /^[0-9]{7,15}$/;
-    if (phonePattern.test(phone)) {
-      userData.phone_number = userPhone;
-    } else {
-      document.querySelector("#errorPhone").classList.remove("hidden");
-      document.querySelector("#svgPhone").classList.add("fill-red-500");
-      hasError = true;
-    }
-    // email-checker
-    if (userEmail === "") {
-      document.querySelector("#errorEmail").classList.remove("hidden");
-      document.querySelector("#svgEmail").classList.add("fill-red-500");
-      hasError = true;
-    } else {
-      document.querySelector("#errorEmail").classList.add("hidden");
-      document.querySelector("#svgEmail").classList.remove("fill-red-500");
-    }
-    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailPattern.test(email)) {
-      userData.email = userEmail;
-    } else {
-      document.querySelector("#errorEmail").classList.remove("hidden");
-      document.querySelector("#svgEmail").classList.add("fill-red-500");
-      hasError = true;
-    }
+
     // BirthChecher
     const dob = parseGermanDate(birthDate);
     if (!dob) {
       document.querySelector("#errorBirth").classList.remove("hidden");
       document.querySelector("#svgBirth").classList.add("fill-red-500");
-      hasError = true;
+      swiperRef.current?.slideTo(1);
+      setLoading(false);
+      return;
     } else {
       document.querySelector("#errorBirth").classList.add("hidden");
       document.querySelector("#svgBirth").classList.remove("fill-red-500");
@@ -185,15 +194,61 @@ function Signup() {
         showError("Geburtsdatum darf nicht in der Zukunft liegen.");
         document.querySelector("#errorBirth").classList.remove("hidden");
         document.querySelector("#svgBirth").classList.add("fill-red-500");
-        hasError = true;
+        swiperRef.current?.slideTo(1);
+        setLoading(false);
+        return;
       }
+    }
+
+    // phone_checker
+    if (userPhone === "") {
+      document.querySelector("#errorPhone").classList.remove("hidden");
+      document.querySelector("#svgPhone").classList.add("fill-red-500");
+      swiperRef.current?.slideTo(2);
+      setLoading(false);
+      return;
+    } else {
+      document.querySelector("#errorPhone").classList.add("hidden");
+      document.querySelector("#svgPhone").classList.remove("fill-red-500");
+    }
+    let phonePattern = /^[0-9]{7,15}$/;
+    if (phonePattern.test(phone)) {
+      userData.phone_number = userPhone;
+    } else {
+      document.querySelector("#errorPhone").classList.remove("hidden");
+      document.querySelector("#svgPhone").classList.add("fill-red-500");
+      setLoading(false);
+      return;
+    }
+    // email-checker
+    if (userEmail === "") {
+      document.querySelector("#errorEmail").classList.remove("hidden");
+      document.querySelector("#svgEmail").classList.add("fill-red-500");
+      swiperRef.current?.slideTo(2);
+      setLoading(false);
+      return;
+    } else {
+      document.querySelector("#errorEmail").classList.add("hidden");
+      document.querySelector("#svgEmail").classList.remove("fill-red-500");
+    }
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailPattern.test(email)) {
+      userData.email = userEmail;
+    } else {
+      document.querySelector("#errorEmail").classList.remove("hidden");
+      document.querySelector("#svgEmail").classList.add("fill-red-500");
+      swiperRef.current?.slideTo(2);
+      setLoading(false);
+      return;
     }
 
     // passCheck
     if (userPassword === "") {
       document.querySelector("#errorPass").classList.remove("hidden");
       document.querySelector("#svgPass").classList.add("fill-red-500");
-      hasError = true;
+      swiperRef.current?.slideTo(3);
+      setLoading(false);
+      return;
     } else {
       document.querySelector("#errorPass").classList.add("hidden");
       document.querySelector("#svgPass").classList.remove("fill-red-500");
@@ -202,15 +257,12 @@ function Signup() {
     if (password !== confirm) {
       document.querySelector("#errorConfimPass").classList.remove("hidden");
       document.querySelector("#svgConfimPass").classList.add("fill-red-500");
-      hasError = true;
+      swiperRef.current?.slideTo(3);
+      setLoading(false);
+      return;
     } else {
       document.querySelector("#errorConfimPass").classList.add("hidden");
       document.querySelector("#svgConfimPass").classList.remove("fill-red-500");
-    }
-
-    if (hasError) {
-      setLoading(false);
-      return;
     }
     // server
     try {
@@ -273,33 +325,29 @@ function Signup() {
           modules={[Pagination]}
           className="h-full"
           onSwiper={(swiper) => {
-            swiperRef.current = swiper;
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
-          }}
-          onSlideChange={(swiper) => {
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
-          }}
+  swiperRef.current = swiper;
+  setIsBeginning(swiper.isBeginning);
+  setIsEnd(swiper.isEnd);
+      requestAnimationFrame(() => firstRef.current?.focus());
+}}
+onSlideChange={(swiper) => {
+  setIsBeginning(swiper.isBeginning);
+  setIsEnd(swiper.isEnd);
+}}
+ onSlideChangeTransitionEnd={(swiper) => {
+    focusByIndex(swiper);
+  }}
         >
-          <SwiperSlide className="h-full flex! items-center justify-center m-auto -mt-3 mb-3">
+          <SwiperSlide  data-step="name" className="h-full flex! items-center justify-center">
             <div className="flex flex-row gap-2 w-10/12 max-w-md relative">
               <div className="in-glass-border-ch glass-border-ch in-gradient-border gradient-border w-1/2 rounded-4xl my-1.5 flex-1 min-w-0 relative">
                 <input
+                  ref={firstRef}
                   type="text"
                   placeholder="Vorname"
                   onChange={(e) => setGName(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      e.currentTarget
-                        .closest("div")
-                        ?.nextElementSibling?.querySelector("input")
-                        ?.focus();
-                      checkInput();
-                    }
-                  }}
-                  className="border-none glass-input w-full pl-8 pr-3 py-3 2xl:py-3.5 rounded-4xl outline-none text-white backdrop-blur-sm bg-radial from-60% from-transparent to-black/10"
+  onKeyDown={onEnter(() => lastRef.current?.focus())}
+                  className="js-slide-input border-none glass-input w-full pl-8 pr-3 py-3 2xl:py-3.5 rounded-4xl outline-none text-white backdrop-blur-sm bg-radial from-60% from-transparent to-black/10"
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -319,20 +367,12 @@ function Signup() {
               </div>
               <div className="in-glass-border-ch glass-border-ch in-gradient-border gradient-border w-1/2 rounded-4xl my-1.5 flex-1 min-w-0">
                 <input
+                  ref={lastRef}
                   type="text"
                   placeholder="Nachname"
                   onChange={(e) => setFName(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      e.currentTarget
-                        .closest("div")
-                        ?.nextElementSibling?.querySelector("input")
-                        ?.focus();
-                      checkInput();
-                    }
-                  }}
-                  className="border-none glass-input w-full pl-5 pr-3 py-3 2xl:py-3.5 rounded-4xl outline-none text-white backdrop-blur-sm bg-radial from-60% from-transparent to-black/10"
+                    onKeyDown={onEnter(() => go(1))}
+                  className="js-slide-input border-none glass-input w-full pl-5 pr-3 py-3 2xl:py-3.5 rounded-4xl outline-none text-white backdrop-blur-sm bg-radial from-60% from-transparent to-black/10"
                 />
               </div>
               <span
@@ -343,8 +383,9 @@ function Signup() {
               </span>
             </div>
           </SwiperSlide>
-          <SwiperSlide className="h-full flex! items-center justify-center ">
+          <SwiperSlide data-step="birth" className="h-full flex! items-center justify-center ">
             <FormInput
+              ref={birthRef}
               parentClassName="w-10/12 max-w-md"
               wrapperClassName="w-10/12 max-w-md my-1.5"
               inputProps={{
@@ -353,14 +394,9 @@ function Signup() {
                 placeholder: "TT.MM.JJJJ",
                 value: birthDate,
                 onChange: (e) => setBirthDate(formatBirthInput(e.target.value)),
-                onKeyDown: (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    checkInput();
-                  }
-                },
+                onKeyDown: onEnter(() => go(2)),
               }}
-              inputClassName="pl-8"
+              inputClassName="js-slide-input pl-8"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -383,7 +419,7 @@ function Signup() {
               errorClassName=""
             />
           </SwiperSlide>
-          <SwiperSlide className="h-full flex! flex-col items-center justify-center gap-3 -mt-3 mb-3">
+          <SwiperSlide data-step="contact" className="h-full flex! flex-col items-center justify-center gap-3">
             <div className="w-10/12 max-w-md my-1.5 relative">
               <div className="in-glass-border-ch glass-border-ch in-gradient-border gradient-border rounded-4xl relative">
                 <svg
@@ -406,12 +442,14 @@ function Signup() {
                   +
                 </span>
                 <input
+                ref={phoneRef}
                   type="tel"
                   inputMode="numeric"
                   placeholder="Mobilnummer"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                  className="w-full pl-14 pr-3 py-3 rounded-4xl glass-input text-white outline-none"
+                  onKeyDown={onEnter(() => emailRef.current?.focus())}
+                  className="js-slide-input w-full pl-14 pr-3 py-3 rounded-4xl glass-input text-white outline-none"
                 />
               </div>
               <span
@@ -425,18 +463,14 @@ function Signup() {
             <FormInput
               parentClassName="w-10/12 max-w-md"
               wrapperClassName="w-10/12 max-w-md my-1.5"
+              ref={emailRef}
               inputProps={{
                 type: "text",
                 placeholder: "E-Mail-Adress",
                 onChange: (e) => setEmail(e.target.value),
-                onKeyDown: (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    checkInput();
-                  }
-                },
+                onKeyDown: onEnter(() => go(3)),
               }}
-              inputClassName="pl-8"
+              inputClassName="js-slide-input pl-8"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -458,16 +492,18 @@ function Signup() {
               errorText="Ungültige E-Mail-Adress"
             />
           </SwiperSlide>
-          <SwiperSlide className="h-full flex! flex-col items-center justify-center gap-3 -mt-3">
+          <SwiperSlide data-step="password" className="h-full flex! flex-col items-center justify-center gap-3">
             <FormInput
+              ref={passRef}
               parentClassName="w-10/12 max-w-md"
               wrapperClassName="w-10/12 max-w-md my-1.5"
               inputProps={{
                 type: "password",
                 placeholder: "Passwort",
                 onChange: (e) => setPassword(e.target.value),
+                    onKeyDown: onEnter(() => confirmRef.current?.focus()),
               }}
-              inputClassName="pl-8"
+              inputClassName="js-slide-input pl-8"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -489,20 +525,16 @@ function Signup() {
               errorText="Passwort ist erforderlich"
             />
             <FormInput
+              ref={confirmRef}
               parentClassName="w-10/12 max-w-md"
               wrapperClassName="w-10/12 max-w-md my-1.5"
               inputProps={{
                 type: "password",
                 placeholder: "Passwort bestätigen",
                 onChange: (e) => setConfirm(e.target.value),
-                onKeyDown: (e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    checkInput();
-                  }
-                },
+                onKeyDown: onEnter(() => checkInput()),
               }}
-              inputClassName="pl-8"
+              inputClassName="js-slide-input pl-8"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -533,39 +565,39 @@ function Signup() {
           />
           <label htmlFor="stepVerfyId">Sichere Anmeldung (2FA)</label>
         </div> */}
-        <div className="w-10/12 relative">
-        {/* carousel-btn */}
-          <div className="absolute z-20 flex gap-5 -translate-y-6/5 left-1/2 -translate-x-1/2">
+        <div className="w-4/12 relative">
+          {/* carousel-btn */}
+          <div className="z-20 flex gap-6">
             <button
               type="button"
               disabled={isBeginning}
               onClick={() => swiperRef.current?.slidePrev()}
-              className={`flex-1 py-1 px-20 transition-opacity duration-300 rounded-[10px] border border-white/30 backdrop-blur-sm
-      ${isBeginning ? "opacity-0" : "hover:bg-white/10"}
+              className={`w-2/5 flex-1 py-3 transition-opacity duration-300 rounded-[10px] border backdrop-blur-sm
+      ${isBeginning ? "opacity-0 user-select-none" : ""}
     `}
             >
               Zurück
             </button>
             <button
               type="button"
-              disabled={isEnd}
-              onClick={() => swiperRef.current?.slideNext()}
-              className={`flex-1 py-1 px-20 transition-opacity duration-300 rounded-[10px] border border-white/30 backdrop-blur-sm
-      ${isEnd ? "opacity-0" : "hover:bg-white/10"}
-    `}
+              disabled={loading}
+              onClick={() => {
+                if (isEnd) {
+                  checkInput();
+                } else {
+                  swiperRef.current?.slideNext();
+                }
+              }}
+              className={`Button w-2/5 flex-1 py-3 rounded-[10px] backdrop-blur-sm
+                ${loading ? "cursor-wait animate-pulse" : ""}`}
             >
-              Weiter
+              {isEnd
+                ? loading
+                  ? "Registrieren..."
+                  : "Registrieren"
+                : "Weiter"}
             </button>
           </div>
-          {/* submit-btn */}
-          <Button
-            type="submit"
-            onClick={checkInput}
-            loading={loading}
-            className="text-lg"
-          >
-            {loading ? "Registrieren..." : "Registrieren"}
-          </Button>
         </div>
         <span className="mt-1 2xl:mt-3">
           Bereits ein Konto?{" "}
