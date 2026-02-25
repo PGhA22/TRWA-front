@@ -11,17 +11,17 @@ function MainLayout() {
   const navigate = useNavigate();
 
   const pathname = location.pathname;
+  const basePath = "/live";
+const inLive = pathname === basePath || pathname.startsWith(basePath + "/");
+const livePath = inLive ? pathname.slice(basePath.length) || "/" : pathname;
 
-  const onRules = pathname === "/rules" || pathname.includes("/rules");
-  const onStep1 = pathname === "/" || pathname.includes("step1");
-  const onStep2 = pathname.includes("step2");
-  const onStep3 = pathname.includes("step3");
-  const onBankTransfer = pathname.includes("bank-transfer");
-
-  // ✅ اگر بعد از پرداخت آنلاین کاربر برگرده به این route (مثلاً /payment-success)
-  // تو روت‌ها اگه داری، همین الگو کار می‌کنه. اگر نداری مشکلی ایجاد نمی‌کنه.
-  const onPaymentSuccess =
-    pathname.includes("payment-success") || pathname.includes("success");
+ const onRules = livePath === "/rules";
+const onStep1 = livePath === "/" || livePath === "/step1";
+const onStep2 = livePath === "/step2";
+const onStep3 = livePath === "/step3";
+const onBankTransfer = livePath === "/bank-transfer";
+const onPaymentSuccess =
+  livePath.includes("payment-success") || livePath.includes("success");
 
   const buttonLabel = onRules ? "Regeln akzeptieren" : "Weiter";
 
@@ -32,7 +32,7 @@ function MainLayout() {
     // ✅ بعد از بانک ترنسفر -> rules
     if (onBankTransfer) {
       const st = location.state || {};
-      navigate("/rules", {
+      navigate("rules", {
         state: {
           registrationId: st.registrationId,
           eventId: st.eventId,
@@ -43,14 +43,14 @@ function MainLayout() {
 
     // ✅ بعد از پرداخت آنلاین برگشتی (success page) -> rules
     if (onPaymentSuccess) {
-      navigate("/rules");
+      navigate("rules");
       return;
     }
 
     // ✅ rules آخرین مرحله
     if (onRules) {
       // پایان فرآیند (اگر صفحه done داری اینجا عوض کن)
-      navigate("/");
+      navigate("/live");
       return;
     }
 
@@ -60,7 +60,7 @@ function MainLayout() {
         alert("Bitte wählen Sie einen Termin aus.");
         return;
       }
-      navigate("/step2");
+      navigate("step2");
       return;
     }
 
@@ -70,7 +70,7 @@ function MainLayout() {
         alert("Bitte alle Felder ausfüllen.");
         return;
       }
-      navigate("/step3");
+      navigate("step3");
       return;
     }
 
@@ -87,7 +87,7 @@ function MainLayout() {
 
       try {
         const response = await fetch(
-          `${API_BASE}/events/${selectedCard}/register/`,
+          `${API_BASE}/api/events/${selectedCard}/register/`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -111,7 +111,7 @@ function MainLayout() {
 
         // ✅ card_to_card -> bank-transfer (بعدش دکمه اون صفحه می‌ره rules)
         if (paymentMethod === "card_to_card") {
-          navigate("/bank-transfer", {
+          navigate("bank-transfer", {
             state: {
               registrationId: data.registration_id,
               eventId: selectedCard,
@@ -127,7 +127,7 @@ function MainLayout() {
         }
 
         alert("Registrierung erfolgreich.");
-        navigate("/");
+        navigate("/live");
       } catch (error) {
         console.error(error);
         alert("Netzwerkfehler bei der Registrierung.");
