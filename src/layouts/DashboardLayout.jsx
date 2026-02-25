@@ -227,7 +227,6 @@ export default function DashboardLayout() {
               item.type === "panel" && (activeIndex === index || isRouteActive);
             const isActive =
               (item.type === "link" && isRouteActive) || isPanelActive;
-
             return (
               <div
                 contenteditable={false}
@@ -278,14 +277,12 @@ export default function DashboardLayout() {
                   <img src={item.icon} alt="icon" className="w-5 2xl:w-5.5" />
                   {item.label}
                 </button>
-
                 {item.type === "panel" && activeIndex === index && (
                   <div ref={spacerRef} style={{ height: panelHeight }} />
                 )}
               </div>
             );
           })}
-
           {showPanel && (
             <div
               ref={panelRef}
@@ -337,7 +334,6 @@ export default function DashboardLayout() {
           </div>
         </div>
       </aside>
-
       <main className="w-10/12">
         <Outlet />
       </main>

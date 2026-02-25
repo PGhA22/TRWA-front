@@ -3,10 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { http } from "../server/http";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-import Button from "../components/ui/Button";
-import "../style.css";
+import PhoneInput from "react-phone-input-2";
 import "swiper/css";
 import "swiper/css/pagination";
+import "react-phone-input-2/lib/style.css";
+import "../style.css";
 import Checkbox from "../components/ui/CheckBox";
 import FormInput from "../components/ui/FormInput";
 import SignIn_withGoogle from "../components/ui/SignIn_withGoogle";
@@ -35,43 +36,43 @@ function Signup() {
   const [isEnd, setIsEnd] = useState(false);
 
   // auto-focus
-const firstRef = useRef(null);
-const lastRef = useRef(null);
-const birthRef = useRef(null);
-const phoneRef = useRef(null);
-const emailRef = useRef(null);
-const passRef = useRef(null);
-const confirmRef = useRef(null);
+  const firstRef = useRef(null);
+  const lastRef = useRef(null);
+  const birthRef = useRef(null);
+  const phoneRef = useRef(null);
+  const emailRef = useRef(null);
+  const passRef = useRef(null);
+  const confirmRef = useRef(null);
 
-const lockRef = useRef(false);
-const lock = () => {
-  lockRef.current = true;
-  setTimeout(() => (lockRef.current = false), 350);
-};
+  const lockRef = useRef(false);
+  const lock = () => {
+    lockRef.current = true;
+    setTimeout(() => (lockRef.current = false), 350);
+  };
 
-const focusByIndex = (swiper) => {
-  const i = swiper?.activeIndex ?? swiperRef.current?.activeIndex ?? 0;
+  const focusByIndex = (swiper) => {
+    const i = swiper?.activeIndex ?? swiperRef.current?.activeIndex ?? 0;
 
-  if (i === 0) firstRef.current?.focus();
-  if (i === 1) birthRef.current?.focus();
-  if (i === 2) phoneRef.current?.focus();
-  if (i === 3) passRef.current?.focus();
-};
+    if (i === 0) firstRef.current?.focus();
+    if (i === 1) birthRef.current?.focus();
+    if (i === 2) phoneRef.current?.focus();
+    if (i === 3) passRef.current?.focus();
+  };
 
-const go = (index) => {
-  if (lockRef.current) return;
-  lock();
-  swiperRef.current?.slideTo(index);
-};
+  const go = (index) => {
+    if (lockRef.current) return;
+    lock();
+    swiperRef.current?.slideTo(index);
+  };
 
-const onEnter = (next) => (e) => {
-  if (e.key !== "Enter") return;
-  if (e.repeat) return;
-  e.preventDefault();
-  e.stopPropagation();
-  if (lockRef.current) return;
-  next?.();
-};
+  const onEnter = (next) => (e) => {
+    if (e.key !== "Enter") return;
+    if (e.repeat) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (lockRef.current) return;
+    next?.();
+  };
 
   // errors
   function showError(msg) {
@@ -135,6 +136,132 @@ const onEnter = (next) => (e) => {
 
     return `${yyyy}-${mm}-${dd}`;
   }
+
+  const validateStep = (step) => {
+    const userGName = gName.trim();
+    const userFName = fName.trim();
+    const userPhone = phone.trim();
+    const userEmail = email.trim();
+    const userPassword = password.trim();
+
+    // step 0: name
+    if (step === 0) {
+      if (userGName === "" || userFName === "") {
+        document.querySelector("#errorUser")?.classList.remove("hidden");
+        document.querySelector("#svgUser")?.classList.add("fill-red-500");
+        requestAnimationFrame(() =>
+          userGName === ""
+            ? firstRef.current?.focus()
+            : lastRef.current?.focus(),
+        );
+        return false;
+      }
+      document.querySelector("#errorUser")?.classList.add("hidden");
+      document.querySelector("#svgUser")?.classList.remove("fill-red-500");
+      return true;
+    }
+
+    // step 1: birth
+    if (step === 1) {
+      const dob = parseGermanDate(birthDate);
+      if (!dob) {
+        document.querySelector("#errorBirth")?.classList.remove("hidden");
+        document.querySelector("#svgBirth")?.classList.add("fill-red-500");
+        requestAnimationFrame(() => birthRef.current?.focus());
+        return false;
+      }
+
+      const today = new Date();
+      const t = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate(),
+      );
+      const d = new Date(dob.getFullYear(), dob.getMonth(), dob.getDate());
+      if (d > t) {
+        showError("Geburtsdatum darf nicht in der Zukunft liegen.");
+        document.querySelector("#errorBirth")?.classList.remove("hidden");
+        document.querySelector("#svgBirth")?.classList.add("fill-red-500");
+        requestAnimationFrame(() => birthRef.current?.focus());
+        return false;
+      }
+
+      document.querySelector("#errorBirth")?.classList.add("hidden");
+      document.querySelector("#svgBirth")?.classList.remove("fill-red-500");
+      return true;
+    }
+
+    // step 2: phone + email
+    if (step === 2) {
+      let ok = true;
+
+      // phone
+      const phonePattern = /^[0-9]{7,15}$/;
+      if (userPhone === "" || !phonePattern.test(userPhone)) {
+        document.querySelector("#errorPhone")?.classList.remove("hidden");
+        document.querySelector("#svgPhone")?.classList.add("fill-red-500");
+        requestAnimationFrame(() => phoneRef.current?.focus());
+        ok = false;
+      } else {
+        document.querySelector("#errorPhone")?.classList.add("hidden");
+        document.querySelector("#svgPhone")?.classList.remove("fill-red-500");
+      }
+
+      // email
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (userEmail === "" || !emailPattern.test(userEmail)) {
+        document.querySelector("#errorEmail")?.classList.remove("hidden");
+        document.querySelector("#svgEmail")?.classList.add("fill-red-500");
+        if (ok) requestAnimationFrame(() => emailRef.current?.focus());
+        ok = false;
+      } else {
+        document.querySelector("#errorEmail")?.classList.add("hidden");
+        document.querySelector("#svgEmail")?.classList.remove("fill-red-500");
+      }
+
+      return ok;
+    }
+
+    // step 3: password + confirm
+    if (step === 3) {
+      if (userPassword === "") {
+        document.querySelector("#errorPass")?.classList.remove("hidden");
+        document.querySelector("#svgPass")?.classList.add("fill-red-500");
+        requestAnimationFrame(() => passRef.current?.focus());
+        return false;
+      } else {
+        document.querySelector("#errorPass")?.classList.add("hidden");
+        document.querySelector("#svgPass")?.classList.remove("fill-red-500");
+      }
+
+      if (password !== confirm) {
+        document.querySelector("#errorConfimPass")?.classList.remove("hidden");
+        document.querySelector("#svgConfimPass")?.classList.add("fill-red-500");
+        requestAnimationFrame(() => confirmRef.current?.focus());
+        return false;
+      } else {
+        document.querySelector("#errorConfimPass")?.classList.add("hidden");
+        document
+          .querySelector("#svgConfimPass")
+          ?.classList.remove("fill-red-500");
+      }
+
+      return true;
+    }
+
+    return true;
+  };
+
+  const nextStep = () => {
+    const swiper = swiperRef.current;
+    if (!swiper) return;
+
+    const step = swiper.activeIndex;
+    if (!validateStep(step)) return;
+
+    if (swiper.isEnd) checkInput();
+    else swiper.slideNext();
+  };
 
   async function checkInput() {
     if (loading) return;
@@ -325,20 +452,23 @@ const onEnter = (next) => (e) => {
           modules={[Pagination]}
           className="h-full"
           onSwiper={(swiper) => {
-  swiperRef.current = swiper;
-  setIsBeginning(swiper.isBeginning);
-  setIsEnd(swiper.isEnd);
-      requestAnimationFrame(() => firstRef.current?.focus());
-}}
-onSlideChange={(swiper) => {
-  setIsBeginning(swiper.isBeginning);
-  setIsEnd(swiper.isEnd);
-}}
- onSlideChangeTransitionEnd={(swiper) => {
-    focusByIndex(swiper);
-  }}
+            swiperRef.current = swiper;
+            setIsBeginning(swiper.isBeginning);
+            setIsEnd(swiper.isEnd);
+            requestAnimationFrame(() => firstRef.current?.focus());
+          }}
+          onSlideChange={(swiper) => {
+            setIsBeginning(swiper.isBeginning);
+            setIsEnd(swiper.isEnd);
+          }}
+          onSlideChangeTransitionEnd={(swiper) => {
+            focusByIndex(swiper);
+          }}
         >
-          <SwiperSlide  data-step="name" className="h-full flex! items-center justify-center">
+          <SwiperSlide
+            data-step="name"
+            className="h-full flex! items-center justify-center"
+          >
             <div className="flex flex-row gap-2 w-10/12 max-w-md relative">
               <div className="in-glass-border-ch glass-border-ch in-gradient-border gradient-border w-1/2 rounded-4xl my-1.5 flex-1 min-w-0 relative">
                 <input
@@ -346,8 +476,8 @@ onSlideChange={(swiper) => {
                   type="text"
                   placeholder="Vorname"
                   onChange={(e) => setGName(e.target.value)}
-  onKeyDown={onEnter(() => lastRef.current?.focus())}
-                  className="js-slide-input border-none glass-input w-full pl-8 pr-3 py-3 2xl:py-3.5 rounded-4xl outline-none text-white backdrop-blur-sm bg-radial from-60% from-transparent to-black/10"
+                  onKeyDown={onEnter(() => lastRef.current?.focus())}
+                  className="js-slide-input border-none glass-input w-full pl-10 pr-3 py-3 2xl:py-3.5 rounded-4xl outline-none text-white backdrop-blur-sm bg-radial from-60% from-transparent to-black/10"
                 />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -356,7 +486,7 @@ onSlideChange={(swiper) => {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="size-4.5 z-10 absolute mx-2.5"
+                  className="size-4.5 z-10 absolute mx-4.5"
                 >
                   <path
                     strokeLinecap="round"
@@ -371,7 +501,7 @@ onSlideChange={(swiper) => {
                   type="text"
                   placeholder="Nachname"
                   onChange={(e) => setFName(e.target.value)}
-                    onKeyDown={onEnter(() => go(1))}
+                  onKeyDown={onEnter(nextStep)}
                   className="js-slide-input border-none glass-input w-full pl-5 pr-3 py-3 2xl:py-3.5 rounded-4xl outline-none text-white backdrop-blur-sm bg-radial from-60% from-transparent to-black/10"
                 />
               </div>
@@ -383,7 +513,10 @@ onSlideChange={(swiper) => {
               </span>
             </div>
           </SwiperSlide>
-          <SwiperSlide data-step="birth" className="h-full flex! items-center justify-center ">
+          <SwiperSlide
+            data-step="birth"
+            className="h-full flex! items-center justify-center "
+          >
             <FormInput
               ref={birthRef}
               parentClassName="w-10/12 max-w-md"
@@ -394,9 +527,9 @@ onSlideChange={(swiper) => {
                 placeholder: "TT.MM.JJJJ",
                 value: birthDate,
                 onChange: (e) => setBirthDate(formatBirthInput(e.target.value)),
-                onKeyDown: onEnter(() => go(2)),
+                onKeyDown: onEnter(nextStep),
               }}
-              inputClassName="js-slide-input pl-8"
+              inputClassName="js-slide-input pl-10"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -405,7 +538,7 @@ onSlideChange={(swiper) => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-4 z-10 absolute mx-2.5"
+                  className="size-4 z-10 absolute mx-4.5"
                 >
                   <path
                     strokeLinecap="round"
@@ -419,37 +552,31 @@ onSlideChange={(swiper) => {
               errorClassName=""
             />
           </SwiperSlide>
-          <SwiperSlide data-step="contact" className="h-full flex! flex-col items-center justify-center gap-3">
+          <SwiperSlide
+            data-step="contact"
+            className="h-full flex! flex-col items-center justify-center gap-3"
+          >
             <div className="w-10/12 max-w-md my-1.5 relative">
               <div className="in-glass-border-ch glass-border-ch in-gradient-border gradient-border rounded-4xl relative">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  id="svgPhone"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-4.5 absolute left-3 top-1/2 -translate-y-1/2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
-                  />
-                </svg>
-
-                <span className="absolute left-10 top-2/5 -translate-y-2/5 text-white/70">
-                  +
-                </span>
-                <input
-                ref={phoneRef}
-                  type="tel"
-                  inputMode="numeric"
-                  placeholder="Mobilnummer"
+                <PhoneInput
+                  country={"de"}
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                  onKeyDown={onEnter(() => emailRef.current?.focus())}
-                  className="js-slide-input w-full pl-14 pr-3 py-3 rounded-4xl glass-input text-white outline-none"
+                  onChange={(value) => setPhone(value)}
+                  enableSearch={true}
+                  autoFormat={true}
+                  searchPlaceholder="Search country"
+                  disableSearchIcon={true}
+                  inputProps={{
+                    name: "phone",
+                    required: true,
+                    ref: phoneRef,
+                    placeholder: "Mobilnummer",
+                    onKeyDown: onEnter(() => emailRef.current?.focus()),
+                  }}
+                  containerClass="w-full js-slide-input w-full rounded-4xl glass-input text-white outline-none"
+                  inputClass="!w-full !pl-15 !rounded-4xl !glass-input !text-white"
+                  buttonClass="!rounded-l-4xl"
+                  dropdownClass="!bg-[#071e52] !text-white !z-1000"
                 />
               </div>
               <span
@@ -468,9 +595,9 @@ onSlideChange={(swiper) => {
                 type: "text",
                 placeholder: "E-Mail-Adress",
                 onChange: (e) => setEmail(e.target.value),
-                onKeyDown: onEnter(() => go(3)),
+                onKeyDown: onEnter(nextStep),
               }}
-              inputClassName="js-slide-input pl-8"
+              inputClassName="js-slide-input pl-10.5"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -479,7 +606,7 @@ onSlideChange={(swiper) => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-4.5 z-10 absolute mx-2.5"
+                  className="size-4.5 z-1 absolute mx-4.5"
                 >
                   <path
                     strokeLinecap="round"
@@ -492,7 +619,10 @@ onSlideChange={(swiper) => {
               errorText="Ungültige E-Mail-Adress"
             />
           </SwiperSlide>
-          <SwiperSlide data-step="password" className="h-full flex! flex-col items-center justify-center gap-3">
+          <SwiperSlide
+            data-step="password"
+            className="h-full flex! flex-col items-center justify-center gap-3"
+          >
             <FormInput
               ref={passRef}
               parentClassName="w-10/12 max-w-md"
@@ -501,9 +631,9 @@ onSlideChange={(swiper) => {
                 type: "password",
                 placeholder: "Passwort",
                 onChange: (e) => setPassword(e.target.value),
-                    onKeyDown: onEnter(() => confirmRef.current?.focus()),
+                onKeyDown: onEnter(() => confirmRef.current?.focus()),
               }}
-              inputClassName="js-slide-input pl-8"
+              inputClassName="js-slide-input pl-10"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -512,7 +642,7 @@ onSlideChange={(swiper) => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-4 z-10 absolute mx-2.5"
+                  className="size-4 z-10 absolute mx-4.5"
                 >
                   <path
                     strokeLinecap="round"
@@ -532,9 +662,9 @@ onSlideChange={(swiper) => {
                 type: "password",
                 placeholder: "Passwort bestätigen",
                 onChange: (e) => setConfirm(e.target.value),
-                onKeyDown: onEnter(() => checkInput()),
+                onKeyDown: onEnter(nextStep),
               }}
-              inputClassName="js-slide-input pl-8"
+              inputClassName="js-slide-input pl-10"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -543,7 +673,7 @@ onSlideChange={(swiper) => {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-4 z-10 absolute mx-2.5"
+                  className="size-4 z-10 absolute mx-4.5"
                 >
                   <path
                     strokeLinecap="round"
@@ -566,14 +696,14 @@ onSlideChange={(swiper) => {
           <label htmlFor="stepVerfyId">Sichere Anmeldung (2FA)</label>
         </div> */}
         <div className="w-4/12 relative">
-          {/* carousel-btn */}
+          {/* btn s */}
           <div className="z-20 flex gap-6">
             <button
               type="button"
               disabled={isBeginning}
               onClick={() => swiperRef.current?.slidePrev()}
               className={`w-2/5 flex-1 py-3 transition-opacity duration-300 rounded-[10px] border backdrop-blur-sm
-      ${isBeginning ? "opacity-0 user-select-none" : ""}
+      ${isBeginning ? "hidden user-select-none" : ""}
     `}
             >
               Zurück
@@ -588,6 +718,7 @@ onSlideChange={(swiper) => {
                   swiperRef.current?.slideNext();
                 }
               }}
+              // onClick={nextStep}  // register before next
               className={`Button w-2/5 flex-1 py-3 rounded-[10px] backdrop-blur-sm
                 ${loading ? "cursor-wait animate-pulse" : ""}`}
             >
