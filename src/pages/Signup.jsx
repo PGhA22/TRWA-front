@@ -754,14 +754,14 @@ function Signup() {
             ✕
           </button>
         </div>
-        <div className="w-full flex items-center 2xl:mt-4">
+        {/* <div className="w-full flex items-center 2xl:mt-4">
           <hr className="w-1/5 grow mt-1" />
           <span className="mx-3">oder weiter mit</span>
           <hr className="w-1/5 grow mt-1" />
         </div>
         <div className="flex gap-2.5 mt-0.75 2xl:mt-1.5">
           <SignIn_withGoogle />
-        </div>
+        </div> */}
       </div>
     </>
   );

@@ -8,6 +8,14 @@ import ResetPass from "./pages/ResetPassword";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Dashboard from "./pages/dashboard/Dashboard";
 
+import { createBrowserRouter } from "react-router-dom";
+import MainLayout from "./layouts/mainlayout.jsx";
+import Step1 from "./pages/Step1.jsx";
+import Step2 from "./pages/Step2.jsx";
+import Step3 from "./pages/Step3.jsx";
+import BankTransfer from "./pages/BankTransfer.jsx";
+import Rules from "./pages/Rules.jsx";
+
 import "./style.css";
 
 function App() {
@@ -24,9 +32,55 @@ function App() {
         <Route element={<DashboardLayout />}>
           <Route path="/Dashboard" element={<Dashboard />} />
         </Route>
+
+      <Route path="/live" element={<MainLayout />}>
+        <Route index element={<Step1 />} />
+        <Route path="step1" element={<Step1 />} />
+        <Route path="step2" element={<Step2 />} />
+        <Route path="step3" element={<Step3 />} />
+        <Route path="rules" element={<Rules />} />
+        <Route path="bank-transfer" element={<BankTransfer />} />
+      </Route>
       </Routes>
     </>
   );
 }
 
 export default App;
+
+
+
+
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <Step1 />
+      },
+      {
+        path: "step1",
+        element: <Step1 />,
+      },
+      {
+        path: "step2",
+        element: <Step2 />,
+      },
+      {
+        path: "step3",
+        element: <Step3 />,
+      },
+      {
+        path: "rules",
+        element: <Rules />,
+      },
+      {
+        path: "bank-transfer",
+        element: <BankTransfer />,
+      },
+    ],
+  },
+]);

@@ -251,12 +251,12 @@ function Signin() {
             Hier registrieren
           </Link>
         </span>
-        <div className="w-full flex items-center mt-4">
+        {/* <div className="w-full flex items-center mt-4">
           <hr className="w-1/5 grow mt-1" />
           <span className="mx-3">oder weiter mit</span>
           <hr className="w-1/5 grow mt-1" />
         </div>
-        <SignIn_withGoogle />
+        <SignIn_withGoogle /> */}
       </div>
     </>
   );

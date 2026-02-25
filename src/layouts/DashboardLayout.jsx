@@ -100,6 +100,10 @@ export default function DashboardLayout() {
           <div className="text-white space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
+              <Link to={"/live"}>Current Events</Link>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <div className="w-2 h-2 bg-white rounded-full"></div>
               <Link to={"/Dashboard"}>Upcoming</Link>
             </div>
             <div className="flex items-center gap-2.5">
