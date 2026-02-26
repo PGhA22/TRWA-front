@@ -1,6 +1,6 @@
 import React from "react";
-import { useBooking } from "../context/BookingContext";
-import "../style.css";
+import { useBooking } from "../../../../context/BookingContext";
+import "../../../../style.css";
 
 function Step2() {
   const { inputs, setInputs } = useBooking();

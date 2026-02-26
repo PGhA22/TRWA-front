@@ -10,11 +10,12 @@ import Dashboard from "./pages/dashboard/Dashboard";
 
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "./layouts/mainlayout.jsx";
-import Step1 from "./pages/Step1.jsx";
-import Step2 from "./pages/Step2.jsx";
-import Step3 from "./pages/Step3.jsx";
-import BankTransfer from "./pages/BankTransfer.jsx";
-import Rules from "./pages/Rules.jsx";
+import Step1 from "./pages/dashboard/Live/current/Step1.jsx";
+import Step2 from "./pages/dashboard/Live/current/Step2.jsx";
+import Step3 from "./pages/dashboard/Live/current/Step3.jsx";
+import BankTransfer from "./pages/dashboard/Live/current/BankTransfer.jsx";
+import Rules from "./pages/dashboard/Live/current/Rules.jsx";
+import Success from "./pages/dashboard/Live/current/Success.jsx";
 
 import "./style.css";
 
@@ -33,54 +34,18 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard />} />
         </Route>
 
-      <Route path="/live" element={<MainLayout />}>
-        <Route index element={<Step1 />} />
-        <Route path="step1" element={<Step1 />} />
-        <Route path="step2" element={<Step2 />} />
-        <Route path="step3" element={<Step3 />} />
-        <Route path="rules" element={<Rules />} />
-        <Route path="bank-transfer" element={<BankTransfer />} />
-      </Route>
+        <Route path="/Live" element={<MainLayout />}>
+          <Route index element={<Step1 />} />
+          <Route path="step1" element={<Step1 />} />
+          <Route path="step2" element={<Step2 />} />
+          <Route path="step3" element={<Step3 />} />
+          <Route path="bank-transfer" element={<BankTransfer />} />
+          <Route path="rules" element={<Rules />} />
+          <Route path="success" element={<Success />} />
+        </Route>
       </Routes>
     </>
   );
 }
 
 export default App;
-
-
-
-
-
-export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayout />,
-    children: [
-      {
-        index: true,
-        element: <Step1 />
-      },
-      {
-        path: "step1",
-        element: <Step1 />,
-      },
-      {
-        path: "step2",
-        element: <Step2 />,
-      },
-      {
-        path: "step3",
-        element: <Step3 />,
-      },
-      {
-        path: "rules",
-        element: <Rules />,
-      },
-      {
-        path: "bank-transfer",
-        element: <BankTransfer />,
-      },
-    ],
-  },
-]);

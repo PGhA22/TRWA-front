@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useBooking } from "../context/BookingContext";
-import "../style.css";
+import { useBooking } from "../../../../context/BookingContext";
+import "../../../../style.css";
 
 const API_BASE = import.meta.env.VITE_API_BASE || "https://app.therealwolves.com";
 

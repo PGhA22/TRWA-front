@@ -76,7 +76,7 @@
 }
 html,
 body {
-  background-color: blue;
+  background-color: #2461b5;
   background-image: var(--bg-prim);
   background-repeat: no-repeat;
   background-size: cover;

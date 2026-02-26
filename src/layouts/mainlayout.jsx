@@ -11,17 +11,17 @@ function MainLayout() {
   const navigate = useNavigate();
 
   const pathname = location.pathname;
-  const basePath = "/live";
-const inLive = pathname === basePath || pathname.startsWith(basePath + "/");
-const livePath = inLive ? pathname.slice(basePath.length) || "/" : pathname;
+  const basePath = "/Live";
+  const inLive = pathname === basePath || pathname.startsWith(basePath + "/");
+  const livePath = inLive ? pathname.slice(basePath.length) || "/" : pathname;
 
- const onRules = livePath === "/rules";
-const onStep1 = livePath === "/" || livePath === "/step1";
-const onStep2 = livePath === "/step2";
-const onStep3 = livePath === "/step3";
-const onBankTransfer = livePath === "/bank-transfer";
-const onPaymentSuccess =
-  livePath.includes("payment-success") || livePath.includes("success");
+  const onRules = livePath === "/rules";
+  const onStep1 = livePath === "/" || livePath === "/step1";
+  const onStep2 = livePath === "/step2";
+  const onStep3 = livePath === "/step3";
+  const onBankTransfer = livePath === "/bank-transfer";
+  const onPaymentSuccess = livePath === "/payment-success";
+  const onSuccess = livePath === "/success";
 
   const buttonLabel = onRules ? "Regeln akzeptieren" : "Weiter";
 
@@ -41,16 +41,21 @@ const onPaymentSuccess =
       return;
     }
 
+    if (onSuccess) {
+      navigate("/Live");
+      return;
+    }
+
     // ✅ بعد از پرداخت آنلاین برگشتی (success page) -> rules
     if (onPaymentSuccess) {
-      navigate("rules");
+      navigate("/Live/rules");
       return;
     }
 
     // ✅ rules آخرین مرحله
     if (onRules) {
       // پایان فرآیند (اگر صفحه done داری اینجا عوض کن)
-      navigate("/live");
+      navigate("success");
       return;
     }
 
@@ -98,7 +103,7 @@ const onPaymentSuccess =
               email: inputs.email,
               payment_method: paymentMethod,
             }),
-          }
+          },
         );
 
         if (!response.ok) {
@@ -108,6 +113,14 @@ const onPaymentSuccess =
         }
 
         const data = await response.json();
+
+        if (data.registration_id) {
+          sessionStorage.setItem(
+            "registrationId",
+            String(data.registration_id),
+          );
+          sessionStorage.setItem("eventId", String(selectedCard));
+        }
 
         // ✅ card_to_card -> bank-transfer (بعدش دکمه اون صفحه می‌ره rules)
         if (paymentMethod === "card_to_card") {
@@ -127,7 +140,7 @@ const onPaymentSuccess =
         }
 
         alert("Registrierung erfolgreich.");
-        navigate("/live");
+        navigate("/Live");
       } catch (error) {
         console.error(error);
         alert("Netzwerkfehler bei der Registrierung.");
@@ -143,14 +156,16 @@ const onPaymentSuccess =
 
       <Outlet />
 
-      <div className="p-4 fixed bottom-0 left-0 flex justify-center w-full">
-        <button
-          onClick={handleNext}
-          className="text-white back-bu rounded-[10px] font-semibold text-xl p-4 leading-5 h-fit w-80 mx-auto"
-        >
-          {buttonLabel}
-        </button>
-      </div>
+      {!onSuccess && !onBankTransfer && (
+        <div className="p-4 fixed bottom-0 left-0 flex justify-center w-full">
+          <button
+            onClick={handleNext}
+            className="text-white back-bu Button rounded-[10px] font-semibold text-xl p-4 leading-5 h-fit w-80 mx-auto"
+          >
+            {buttonLabel}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const API_BASE = import.meta.env.VITE_API_BASE || "https://app.therealwolves.com";
+const API_BASE =
+  import.meta.env.VITE_API_BASE || "https://app.therealwolves.com";
 
 function CopyButton({ text, label = "Copy" }) {
   const [copied, setCopied] = useState(false);
@@ -54,7 +55,7 @@ function BankTransfer() {
     try {
       const res = await fetch(
         `${API_BASE}/api/registrations/${registrationId}/confirm-bank-transfer/`,
-        { method: "POST" }
+        { method: "POST" },
       );
 
       const data = await res.json().catch(() => ({}));
@@ -65,7 +66,9 @@ function BankTransfer() {
       }
 
       alert("✅ Bestätigt! Deine Registrierung ist abgeschlossen.");
-      navigate("/");
+      navigate("/Live/rules", {
+        state: { registrationId, eventId: state.eventId },
+      });
     } catch (e) {
       console.error(e);
       alert("Netzwerkfehler.");
@@ -111,7 +114,7 @@ function BankTransfer() {
 
         {registrationId && (
           <div className="mt-2 text-xs text-white/50 flex items-center justify-between">
-            <span>Registrierungs-ID: {registrationId}</span>
+            <span>Verwendungszweck: {registrationId}</span>
             <CopyButton text={String(registrationId)} label="ID kopieren" />
           </div>
         )}

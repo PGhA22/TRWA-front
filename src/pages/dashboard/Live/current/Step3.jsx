@@ -1,8 +1,8 @@
-import { useBooking } from "../context/BookingContext";
-import "../style.css";
-import Paypal from "../assets/paypal.svg";
-import Credit from "../assets/credit.svg";
-import Trans from "../assets/transaction.svg";
+import { useBooking } from "../../../../context/BookingContext";
+import "../../../../style.css";
+import Paypal from "../../../../assets/paypal.svg";
+import Credit from "../../../../assets/credit.svg";
+import Trans from "../../../../assets/transaction.svg";
 
 function Step3() {
   const { selectedPayment, setSelectedPayment } = useBooking();
