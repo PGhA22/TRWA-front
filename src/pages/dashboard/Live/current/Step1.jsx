@@ -98,24 +98,6 @@ function Step1() {
                   <h2 className="font-semibold text-sm text-white/80">
                     Verfügbare Plätze: {card.seats}
                   </h2>
-
-                  {/* ✅ قیمت */}
-                  <div className="mt-1">
-                    {card.hasDiscount ? (
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-sm text-white/40 line-through">
-                          {formatEUR(card.originalPrice)}
-                        </span>
-                        <span className="text-lg font-semibold text-white">
-                          {formatEUR(card.currentPrice)}
-                        </span>
-                      </div>
-                    ) : (
-                      <span className="text-lg font-semibold text-white">
-                        {formatEUR(card.currentPrice)}
-                      </span>
-                    )}
-                  </div>
                 </div>
 
                 {/* راست: رادیو */}
