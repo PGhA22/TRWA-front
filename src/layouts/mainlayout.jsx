@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useBooking } from "../context/BookingContext";
 
 const API_BASE =
-  import.meta.env.VITE_API_BASE || "https://app.therealwolves.com/api";
+  import.meta.env.VITE_API_BASE || "https://app.therealwolves.com";
 
 function MainLayout() {
   const { selectedCard, inputs, selectedPayment } = useBooking();
