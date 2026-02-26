@@ -5,7 +5,7 @@ import "../../../../style.css";
 const API_BASE = import.meta.env.VITE_API_BASE || "https://app.therealwolves.com";
 
 function Step1() {
-  const { selectedCard, setSelectedCard } = useBooking();
+  const { selectedCard, setSelectedCard, setEventsMap } = useBooking();
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -48,6 +48,22 @@ function Step1() {
             hasDiscount,
           };
         });
+
+        const mapObj = {};
+data.forEach((event) => {
+  mapObj[event.id] = {
+    id: event.id,
+    title: event.title,
+    start_datetime: event.start_datetime,
+
+    current_price_eur: event.current_price_eur ?? event.price ?? 0,
+    original_price_eur: event.original_price_eur ?? null,
+    discount_price_eur: event.discount_price_eur ?? null,
+    is_discount_active: !!event.is_discount_active,
+    discount_end: event.discount_end ?? null,
+  };
+});
+setEventsMap(mapObj);
 
         setCards(mapped);
       } catch (err) {

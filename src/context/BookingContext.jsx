@@ -10,9 +10,8 @@ export function BookingProvider({ children }) {
     telefon: "",
     email: "",
   });
-
   const [selectedPayment, setSelectedPayment] = useState(null);
-
+  const [eventsMap, setEventsMap] = useState({}); // { [eventId]: { ...data } }
   return (
     <BookingContext.Provider
       value={{
@@ -22,13 +21,14 @@ export function BookingProvider({ children }) {
         setInputs,
         selectedPayment,
         setSelectedPayment,
+        eventsMap,
+        setEventsMap,
       }}
     >
       {children}
     </BookingContext.Provider>
   );
 }
-
 
 export function useBooking() {
   const ctx = useContext(BookingContext);
