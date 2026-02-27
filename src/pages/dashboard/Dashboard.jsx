@@ -128,7 +128,7 @@ function Dashboard() {
                   />
                 </svg>
                 <Link
-                  to="/Progress"
+                  to="/Coming-soon"
                   className="font-semibold relative z-10 pointer-events-auto"
                 >
                   View Detailed Progress
@@ -155,7 +155,8 @@ function Dashboard() {
               <p className="mt-2 text-xs">Your active communities</p>
             </div>
             <div>
-              <Link to="/Groups/MyGroups" className="text-xs">
+              {/* to="/Groups/MyGroups" */}
+              <Link to="/Coming-soon" className="text-xs">
                 View All
               </Link>
             </div>
@@ -172,7 +173,7 @@ function Dashboard() {
               </div>
               <div>
                 {/* TODO-link-Discover-group */}
-                <Link to={"/"}>
+                <Link to={"/Coming-soon"}>
                   <svg
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +194,8 @@ function Dashboard() {
           <div className="addGroup">
             <div className="w-full h-18 mt-4 py-3.5 border border-white/20 box-border rounded-[15px] flex justify-center items-center px-6">
               <div className="h-3/4 aspect-square rounded-[15px] flex justify-center items-center">
-                <Link to="/Group/DiscoverGroups">
+              {/* /Group/DiscoverGroups */}
+                <Link to="/Coming-soon">
                   <svg
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"

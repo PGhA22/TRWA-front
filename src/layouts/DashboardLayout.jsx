@@ -209,7 +209,7 @@ export default function DashboardLayout() {
           className="w-full h-full object-contain"
         />
         <Link
-          to="/Support"
+          to="/Coming-soon"
           className="bg-transparent h-full w-full absolute inset-0 rounded-full"
         ></Link>
       </div>
