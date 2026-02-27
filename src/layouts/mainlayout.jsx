@@ -11,11 +11,16 @@ function MainLayout() {
   const navigate = useNavigate();
 
   const pathname = location.pathname;
-  const basePath = "/Live";
-  const inLive = pathname === basePath || pathname.startsWith(basePath + "/");
-  const livePath = inLive ? pathname.slice(basePath.length) || "/" : pathname;
+  const basePath = "/live";
+  const pathnameLower = pathname.toLowerCase();
+  const inLive =
+    pathnameLower === basePath || pathnameLower.startsWith(basePath + "/");
+  const livePath = inLive
+    ? pathnameLower.slice(basePath.length) || "/"
+    : pathnameLower;
 
   const onRules = livePath === "/rules";
+  const onConsent = livePath === "/consent";
   const onStep1 = livePath === "/" || livePath === "/step1";
   const onStep2 = livePath === "/step2";
   const onStep3 = livePath === "/step3";
@@ -52,11 +57,47 @@ function MainLayout() {
       return;
     }
 
-    // ✅ rules آخرین مرحله
+    // ✅ rules -> consent (قبلاً success بود)
     if (onRules) {
-      // پایان فرآیند (اگر صفحه done داری اینجا عوض کن)
-      navigate("success");
+      navigate("consent"); // ✅ CHANGED (was navigate("success"))
       return;
+    }
+
+    // ✅ ADDED: consent step (send to backend فقط موقع کلیک Next)
+    if (onConsent) {
+      const v = sessionStorage.getItem("faceVisible");
+      if (v !== "1" && v !== "0") {
+        alert("Bitte wählen Sie eine Option aus.");
+        return;
+      }
+      const registrationId = sessionStorage.getItem("registrationId");
+      if (!registrationId) {
+        alert("Registrierungs-ID fehlt.");
+        return;
+      }
+      try {
+        const res = await fetch(
+          `${API_BASE}/api/registrations/${registrationId}/consent/`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              face_visible: v === "1",
+            }),
+          },
+        );
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          alert(errData.detail || "Fehler beim Speichern der Zustimmung.");
+          return;
+        }
+        navigate("success");
+        return;
+      } catch (e) {
+        console.error(e);
+        alert("Netzwerkfehler beim Speichern der Zustimmung.");
+        return;
+      }
     }
 
     // ✅ step1 -> step2

@@ -967,10 +967,10 @@ input:-moz-autofill {
   border-radius: 15px;
   background: linear-gradient(
     5deg,
-    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.3) 0%,
     rgba(255, 255, 255, 0.04) 40%,
     rgba(255, 255, 255, 0.04) 60%,
-    rgba(255, 255, 255, 0.45) 100%
+    rgba(255, 255, 255, 0.3) 100%
   );
   mask:
     linear-gradient(#fff 0 0) content-box,
@@ -992,7 +992,7 @@ input:-moz-autofill {
       rgba(0, 0, 0, 0.3) 0%,
       rgba(0, 0, 0, 0) 30%,
       rgba(0, 0, 0, 0) 70%,
-      rgba(255, 255, 255, 0.3) 100%
+      rgba(255, 255, 255, 0.25) 100%
     ),
     linear-gradient(
       80deg,
@@ -1505,4 +1505,48 @@ background:
 .back-bu {
   background: #4592d5;
   background: linear-gradient(90deg, rgba(13, 38, 108, 1) 30%, rgba(0, 0, 0, 1) 100%);
+}
+
+
+
+/* Hidden Radio Input */
+.radio-input {
+  display: none;
+}
+
+/* Radio Label */
+.radio {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  padding: 5px;
+  aspect-ratio: 1/1;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+}
+/* Focus Outline */
+.radio:focus {
+  outline: 1px solid #4b0082;
+}
+/* Inner Circle */
+.circle {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+.radio-input:checked + .radio .circle {
+  aspect-ratio: 1/1;
+  background: #2461f5;
+  border: 2px solid #000000;
+  transform: scale(1);
+  outline: 3px solid #2461f5;
 }

@@ -38,15 +38,15 @@ export default function DashboardLayout() {
           <div className="text-white space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>My Courses</Link>
+              <Link to={"/Coming-soon"}>My Courses</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>Continue Watching</Link>
+              <Link to={"/Coming-soon"}>Continue Watching</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>All Courses</Link>
+              <Link to={"/Coming-soon"}>All Courses</Link>
             </div>
           </div>
         ),
@@ -60,15 +60,15 @@ export default function DashboardLayout() {
           <div className="text-white space-y-4 text-nowrap">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>Available Challenges</Link>
+              <Link to={"/Coming-soon"}>Available Challenges</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>My Challenges</Link>
+              <Link to={"/Coming-soon"}>My Challenges</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>Submissions</Link>
+              <Link to={"/Coming-soon"}>Submissions</Link>
             </div>
           </div>
         ),
@@ -82,11 +82,11 @@ export default function DashboardLayout() {
           <div className="text-white space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>My Groups</Link>
+              <Link to={"/Coming-soon"}>My Groups</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>Discover Groups</Link>
+              <Link to={"/Coming-soon"}>Discover Groups</Link>
             </div>
           </div>
         ),
@@ -104,31 +104,31 @@ export default function DashboardLayout() {
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>Upcoming</Link>
+              <Link to={"/Coming-soon"}>Upcoming</Link>
             </div>
             <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 bg-white rounded-full"></div>
-              <Link to={"/Dashboard"}>Past Events</Link>
+              <Link to={"/Coming-soon"}>Past Events</Link>
             </div>
           </div>
         ),
       },
-      { type: "link", label: "Chat Room", icon: iconChat, to: "/Dashboard" },
+      { type: "link", label: "Chat Room", icon: iconChat, to: "/Coming-soon" },
       {
         type: "link",
         label: "VIP CLUB",
         icon: iconVip,
-        to: "/Dashboard",
+        to: "/Coming-soon",
         variant: "vip",
       },
       {
         type: "link",
         label: "Resources",
         icon: iconResource,
-        to: "/Dashboard",
+        to: "/Coming-soon",
       },
-      { type: "link", label: "FAQ", icon: iconFaq, to: "/Dashboard" },
-      { type: "link", label: "Store", icon: iconStore, to: "/Dashboard" },
+      { type: "link", label: "FAQ", icon: iconFaq, to: "/Coming-soon" },
+      { type: "link", label: "Store", icon: iconStore, to: "/Coming-soon" },
     ],
     [],
   );
@@ -227,10 +227,9 @@ export default function DashboardLayout() {
             const isRouteActive =
               item.to &&
               pathname.toLowerCase().startsWith(item.to.toLowerCase());
-            const isPanelActive =
-              item.type === "panel" && (activeIndex === index || isRouteActive);
+            const isOpen = item.type === "panel" && activeIndex === index;
             const isActive =
-              (item.type === "link" && isRouteActive) || isPanelActive;
+              item.type === "panel" ? isRouteActive : isRouteActive;
             return (
               <div
                 contenteditable={false}
@@ -248,18 +247,16 @@ export default function DashboardLayout() {
                          : ""
                      }
                     py-2.5 px-4 2xl:px-9 rounded-2xl flex gap-1.5 2xl:gap-3.5 items-center w-full whitespace-nowrap
-                    ${
-                      item.variant === "vip"
-                        ? `bg-cover bg-center`
-                        : "shadow-[inset_0px_0px_30px_2px_#245797]"
-                    }
-                    ${
-                      item.variant === "vip"
-                        ? "btnBorderGrad btnBorderVip"
-                        : isActive
-                          ? "btnBorderGrad btnBorderActive"
-                          : ""
-                    }
+                      ${
+                        item.variant === "vip"
+                          ? "btnBorderGrad btnBorderVip"
+                          : isActive
+                            ? "btnBorderGrad btnBorderActive"
+                            : isOpen
+                              ? "btnBorderGrad btnBorderActive bg-white/5 duration-200"
+                              : ""
+                      }
+
                   `}
                   style={
                     item.variant === "vip"
@@ -324,10 +321,14 @@ export default function DashboardLayout() {
               </div>
               <div>
                 <b className=" text-sm">Your Profile</b>
-                <p className="text-xs">Level <span>4</span> · <span>Wolf</span></p>
+                <p className="text-xs">
+                  Level <span>4</span> · <span>Wolf</span>
+                </p>
               </div>
             </div>
-            <p className="mt-7 text-xs text-center">XP <span>2,675</span>  |  Streak <span>12</span> days</p>
+            <p className="mt-7 text-xs text-center">
+              XP <span>2,675</span> | Streak <span>12</span> days
+            </p>
             {/* progres bar */}
             <div className="w-full h-1 mt-5 bg-white/30 rounded-full">
               <div

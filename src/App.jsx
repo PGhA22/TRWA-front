@@ -15,15 +15,20 @@ import Step2 from "./pages/dashboard/Live/current/Step2.jsx";
 import Step3 from "./pages/dashboard/Live/current/Step3.jsx";
 import BankTransfer from "./pages/dashboard/Live/current/BankTransfer.jsx";
 import Rules from "./pages/dashboard/Live/current/Rules.jsx";
+import Consent from "./pages/dashboard/Live/current/Consent.jsx";
 import Success from "./pages/dashboard/Live/current/Success.jsx";
 
 import "./style.css";
+
+import ComingSoon from "./view/ComingSoon";
 
 function App() {
   return (
     <>
       <Routes>
-        {/* TODO */}
+        {/* coming_soon */}
+        <Route path="/Coming-soon" element={<ComingSoon />} />
+        {/* begin */}
         <Route index element={<Signin />} />
         <Route path="/Home" element={<LandingPage />} />
         <Route path="/SignUp" element={<Signup />} />
@@ -34,6 +39,7 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard />} />
         </Route>
 
+        {/* event */}
         <Route path="/Live" element={<MainLayout />}>
           <Route index element={<Step1 />} />
           <Route path="step1" element={<Step1 />} />
@@ -41,6 +47,7 @@ function App() {
           <Route path="step3" element={<Step3 />} />
           <Route path="bank-transfer" element={<BankTransfer />} />
           <Route path="rules" element={<Rules />} />
+          <Route path="consent" element={<Consent />} />
           <Route path="success" element={<Success />} />
         </Route>
       </Routes>
